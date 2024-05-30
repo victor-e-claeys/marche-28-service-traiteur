@@ -3,17 +3,23 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "build": "vite build --base=/marche-28-service-traiteur/",
+    "preview": "concurrently \"npm run serve\" \"npm run tunnel\"",
+    "serve": "vite preview",
+    "tunnel": "ssh -R marche-28-service-traiteur:80:localhost:4173 serveo.net",
+    "deploy": "gh-pages -d dist",
+    "watch": "vite build && concurrently \"npm run serve\" \"npm run tunnel\" \"curl https://lemarche28.ca/wp-admin/admin-ajax.php?action=m28_clear_service_traiteur_script\" --watch"
   },
   "dependencies": {
     "@mdi/font": "7.0.96",
+    "dayjs": "^1.11.10",
     "roboto-fontface": "*",
     "vue": "^3.2.0",
     "vuetify": "^3.0.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",
+    "concurrently": "^8.2.2",
     "unplugin-fonts": "^1.0.3",
     "vite": "^4.2.0",
     "vite-plugin-vuetify": "^1.0.0"
