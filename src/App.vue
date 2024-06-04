@@ -11,7 +11,11 @@ import WeekSelection from './components/WeekSelection.vue';
         <User />
       </v-container>
       <v-form @submit.prevent="submit">
-        <WeekSelection v-if="menus" :menus="menus" :currentMenuID="currentMenuID" :currentMenu="currentMenu" :setCurrentMenuID="setCurrentMenuID" />
+        <WeekSelection v-if="menus"
+                        :menus="menus"
+                        :currentMenuID="currentMenuID"
+                        :currentMenu="currentMenu"
+                        :setCurrentMenuID="setCurrentMenuID" />
         <!--TimerMenu v-if="menus" v-model="currentMenu" /-->
         <div v-if="currentMenu">
           <Day v-for="(day, index) in currentMenu.days" :key="index" v-model="currentMenu.days[index]" :setQuantity="setQuantity" />
@@ -105,7 +109,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 h1 {
   text-align: center;
 }
