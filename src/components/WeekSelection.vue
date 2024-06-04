@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 v-if="currentMenu" class="text-center">{{ menuTitre() }}</h1>
+    <h1 v-if="currentMenu" class="text-center ">{{ menuTitre() }}</h1>
     <div class="center">
       <a class="square" v-for="menu in menus" :key="menu.id" @click="() => setCurrentMenuID(menu.id)">
         <h3>{{ formattedDateToMonth(menu.date_debut.timestamp, menu.date_fin.timestamp) }}</h3>

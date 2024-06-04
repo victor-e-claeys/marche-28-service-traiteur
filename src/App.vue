@@ -11,14 +11,15 @@ import WeekSelection from './components/WeekSelection.vue';
         <User />
       </v-container>
       <v-form @submit.prevent="submit">
-        <WeekSelection v-if="menus"
-                        :menus="menus"
-                        :currentMenuID="currentMenuID"
-                        :currentMenu="currentMenu"
-                        :setCurrentMenuID="setCurrentMenuID" />
-        <TimerMenu v-if="currentMenu" v-model="currentMenu" :currentMenu="currentMenu"/>
+        <WeekSelection v-if="menus" :menus="menus" :currentMenuID="currentMenuID" :currentMenu="currentMenu"
+          :setCurrentMenuID="setCurrentMenuID" />
+        <TimerMenu v-if="currentMenu" v-model="currentMenu" :currentMenu="currentMenu" />
         <div v-if="currentMenu" class="flex">
-          <Day v-for="(day, index) in currentMenu.days" :key="index" v-model="currentMenu.days[index]" :setQuantity="setQuantity" />
+          <Day v-for="(day, index) in currentMenu.days" :key="index" v-model="currentMenu.days[index]"
+            :setQuantity="setQuantity" />
+        </div>
+        <div v-if="currentMenu">
+          <p>Total: {{ totalPrice }} $</p>
         </div>
         <v-btn type="submit" block class="mt-2">Submit</v-btn>
       </v-form>
@@ -34,11 +35,12 @@ export default {
       currentUserID: 0,
       portions: {},
       menus: null,
-      currentMenuID: null
+      currentMenuID: null,
+      totalPrice:0
     };
   },
   methods: {
-    setCurrentMenuID(menuID){
+    setCurrentMenuID(menuID) {
       this.currentMenuID = menuID;
     },
     setQuantity({
@@ -47,8 +49,7 @@ export default {
       productId = 0,
       variationId = 0,
       dayId = 0
-    }){
-      //TODO: Update quantities
+    }) {
     },
     formattedPrice(price) {
       const options = {
@@ -99,9 +100,13 @@ export default {
     },
   },
   computed: {
-    currentMenu(){
+    currentMenu() {
       return this.menus?.find(menu => menu.id === this.currentMenuID);
     },
+    totalPriceForProduct() {
+      return 0;
+      return this.currentMenu.reduce((acc, item) => {acc = item});
+    }
   },
   created() {
     this.updateMenu();
