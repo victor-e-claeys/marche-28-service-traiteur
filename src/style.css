@@ -46,6 +46,8 @@
   --color-weekSelection-unselected: var(--e-global-color-45bf206);
   --color-weekSelection-selectionMade: var(--e-global-color-287e948);
   --color-weekSelection-skip:var(--e-global-color-fecde5d);
+  --color-day-title-unavailable:var(--e-global-color-fecde5d);
+  --color-day-box-unavailable:var(--e-global-color-f54bda1);
 }
 
 .wp-font-primary {
@@ -169,4 +171,13 @@
 }
 .square.active {
   border-color: var(--color-weekSelection-selected);
+}
+.title-unavailable{
+  padding: 0.5em;
+  background-color: var(--color-day-title-unavailable);
+  color:#F0F1DB
+}
+.box-unavailable{
+  max-height:100%;
+  background-color: var(--color-day-box-unavailable);
 }
