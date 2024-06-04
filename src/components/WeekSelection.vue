@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>{{ menuTitre() }}</h1>
+    <h1 v-if="currentMenu">{{ menuTitre() }}</h1>
     <div class="center">
       <a class="square" v-for="menu in menus" :key="menu.id" @click="() => setCurrentMenuID(menu.id)">
         <h3>{{ formattedDateToMonth(menu.date_debut.timestamp, menu.date_fin.timestamp) }}</h3>
@@ -8,6 +8,7 @@
       </a>
     </div>
   </div>
+    <pre>{{ currentMenu }}</pre>
 </template>
 
 <script>
@@ -22,6 +23,14 @@ export default {
     setCurrentMenuID: {
       type: Function,
       required: true
+    },
+    currentMenuID: {
+      type: Number,
+      required: true
+    },
+    currentMenu: {
+      type: Object,
+      required: true
     }
   },
   methods: {
@@ -31,8 +40,8 @@ export default {
      * @returns {string} Titre du menu
      */
     menuTitre() {
-      let date1 = dayjs.unix(this.menus[0].date_debut.timestamp).format('D MMMM');
-      let date2 = dayjs.unix(this.menus[0].date_fin.timestamp).format('D MMMM');
+      let date1 = dayjs.unix(this.currentMenu.date_debut.timestamp).format('D MMMM');
+      let date2 = dayjs.unix(this.currentMenu.date_fin.timestamp).format('D MMMM');
       return `Menu pour le ${date1} au ${date2}`;
     },
     /**
@@ -67,6 +76,9 @@ export default {
     selectMenu(menu) {
       console.log(menu);
     }
+  },
+  created() {
+    this.setCurrentMenuID(this.menus[0].id);
   }
 }
 </script>
