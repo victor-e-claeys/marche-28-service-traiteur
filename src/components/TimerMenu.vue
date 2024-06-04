@@ -1,14 +1,17 @@
+/**
+  @author: Olivier Cote (VictorConceptum)
+ */
 <template>
-  <div v-if="isDeadLineSoon()" class="flex items-center">
+  <div v-if="isDeadLineSoon()" class="flex flex-col items-center mb-5">
     <h4 class=" mt-5 mb-10">Plus que quelques heures avant de passer votre commande</h4>
-    <p>{{ tempsRestants }}</p>
+    <p class="-tracking-2">{{ tempsRestants }}</p>
   </div>
 </template>
 <script>
 import dayjs from 'dayjs';
 export default {
   name: 'TimerMenu',
-  data(){
+  data() {
     return {
       timer: null,
       timeLeft: null,
@@ -26,7 +29,7 @@ export default {
   },
   methods: {
     /**
-     * On met à jour le timer selon la date de fin du menu
+     * Calcule le temps restant entre la date de fin du menu sélectionné avec la date d'aujourd'hui.
      */
     updateTimer() {
       this.timeLeft = this.currentMenu.date_fin.timestamp - dayjs().unix();
