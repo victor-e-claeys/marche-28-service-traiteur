@@ -6,12 +6,9 @@
   <div class="flex-1">
     <h3>{{ modelValue.date.day }}</h3>
     <div v-if="modelValue.available && modelValue.products.pret_a_manger && modelValue.products.pret_a_cuisiner" class="flex selection-type">
-      <div @click="() => setSelectionType('pret_a_manger')">
-        Prêt à manger
-      </div>
-      <div @click="() => setSelectionType('pret_a_cuisiner')">
-        Prêt à cuisiner
-      </div>
+      <v-btn v-for="(label, key) in repas" :key="key" rounded="0" size="small" variant="flat" @click="() => setSelectionType(key)">
+        {{ label }}
+      </v-btn>
     </div>
     <div v-if="modelValue.available">
       <div v-if="modelValue.selectionType != 'pret_a_cuisiner' && modelValue.products.pret_a_manger">
@@ -39,6 +36,14 @@ export default {
   methods: {
     setSelectionType(type){ // "pret_a_manger" ou "pret_a_cuisiner"
       this.$emit('update:modelValue', { ...this.modelValue, selectionType: type });
+    }
+  },
+  computed:{
+    repas() {
+      return {
+        pret_a_manger: "Prêt à manger",
+        pret_a_cuisiner: "Prêt à cuisiner"
+      };
     }
   }
 }

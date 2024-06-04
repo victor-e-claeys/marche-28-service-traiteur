@@ -103,6 +103,15 @@ export default {
       return this.menus?.find(menu => menu.id === this.currentMenuID);
     },
   },
+  watch: {
+    currentMenu: {
+      handler(menu) {
+        if(!menu.isModified) menu.isModified = true;
+        console.log(menu);
+      },
+      deep: true
+    }
+  },
   created() {
     this.updateMenu();
   }
