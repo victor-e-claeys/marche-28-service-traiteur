@@ -1,6 +1,6 @@
 <template>
   <div class="product">
-    <img :src="modelValue.image?.sizes.medium.url" :alt="modelValue.name" />
+    <img class="aspect-square object-cover	" :src="modelValue.image?.sizes.medium.url" :alt="modelValue.name" />
     <div class="product-details">
       <h3>{{ modelValue.name }}</h3>
       <div v-if="modelValue.variations" class="product-options flex">
@@ -9,7 +9,7 @@
               v-model="modelValue.variations[index].qty"
               :reverse="false"
               controlVariant="stacked"
-              label=""
+              :label="Object.values(variation.attributes).join(' ')"
               :hideInput="false"
               :inset="false"
             ></v-number-input>
@@ -20,7 +20,6 @@
           v-model="modelValue.qty"
           :reverse="false"
           controlVariant="stacked"
-          label=""
           :hideInput="false"
           :inset="false"
         ></v-number-input>

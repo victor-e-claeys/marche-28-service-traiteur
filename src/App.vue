@@ -108,6 +108,15 @@ export default {
       return this.currentMenu.reduce((acc, item) => {acc = item});
     }
   },
+  watch: {
+    currentMenu: {
+      handler(menu) {
+        if(!menu.isModified) menu.isModified = true;
+        console.log(menu);
+      },
+      deep: true
+    }
+  },
   created() {
     this.updateMenu();
   }
