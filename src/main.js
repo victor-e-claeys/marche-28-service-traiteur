@@ -22,6 +22,13 @@ dayjs.locale('fr');
 const app = createApp(App)
 
 app.config.globalProperties.dayjs = dayjs;
+app.config.globalProperties.moneyFormatter = new Intl.NumberFormat(
+  'fr-CA', 
+  {
+    style: 'currency',
+    currency: 'CAD',
+  }
+);
 
 registerPlugins(app)
 

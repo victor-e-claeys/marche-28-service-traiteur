@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <div class="flex-1 gap-1">
+  <div class="flex-1 ">
     <h3 class="text-center uppercase ">{{ modelValue.date.day }}</h3>
     <div v-if="modelValue.available && modelValue.products.pret_a_manger && modelValue.products.pret_a_cuisiner" class="flex selection-type">
       <v-btn v-for="(label, key) in repas" :key="key" rounded="0" size="small" variant="flat" @click="() => setSelectionType(key)">
