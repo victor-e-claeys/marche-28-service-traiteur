@@ -4,7 +4,7 @@
     <div class="center">
       <a class="square" v-for="menu in menus" :key="menu.id" @click="() => setCurrentMenuID(menu.id)">
         <h3>{{ formattedDateToMonth(menu.date_debut.timestamp, menu.date_fin.timestamp) }}</h3>
-        <p class="-tracking-2">{{ formattedDateNumberToNumber(menu.date_debut.timestamp, menu.date_fin.timestamp) }}</p>
+        <p>{{ formattedDateNumberToNumber(menu.date_debut.timestamp, menu.date_fin.timestamp) }}</p>
       </a>
     </div>
   </div>
