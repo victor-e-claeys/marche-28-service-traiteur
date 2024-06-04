@@ -4,6 +4,7 @@ import TimerMenu from './components/TimerMenu.vue';
 import User from './components/User.vue';
 import WeekSelection from './components/WeekSelection.vue';
 </script>
+
 <template>
   <v-app>
     <v-main>
@@ -104,7 +105,6 @@ export default {
       return this.menus?.find(menu => menu.id === this.currentMenuID);
     },
     totalPriceForProduct() {
-      return 0;
       return this.currentMenu.reduce((acc, item) => {acc = item});
     }
   },

@@ -2,14 +2,103 @@
 @tailwind components;
 @tailwind utilities;
 
-h1 {
-    font-size: x-large;
+/*    Style pour chaque police de Wordpress. */
+.wp-font-primary {
+    font-family: var(--e-global-typography-primary-font-family);
+    font-weight: var(--e-global-typography-primary-font-weight);
 }
 
-h2 {
-    font-size: large;
+.wp-font-secondary {
+    font-family: var(--e-global-typography-secondary-font-family);
+    font-weight: var(--e-global-typography-secondary-font-weight);
+    line-height: var(--e-global-typography-secondary-line-height);
+    letter-spacing: var(--e-global-typography-secondary-letter-spacing);
 }
 
-h3 {
-    font-size: medium;
+.wp-font-text {
+    font-family: var(--e-global-typography-text-font-family);
+    font-weight: var(--e-global-typography-text-font-weight);
+}
+
+.wp-font-accent {
+    font-family: var(--e-global-typography-accent-font-family);
+    font-weight: var(--e-global-typography-accent-font-weight);
+}
+
+.wp-font-02f76c9 {
+    font-family: var(--e-global-typography-02f76c9-font-family);
+    font-size: var(--e-global-typography-02f76c9-font-size);
+    font-weight: var(--e-global-typography-02f76c9-font-weight);
+}
+
+.wp-font-942e05b {
+    font-family: var(--e-global-typography-942e05b-font-family);
+    font-size: var(--e-global-typography-942e05b-font-size);
+    font-weight: var(--e-global-typography-942e05b-font-weight);
+}
+
+.wp-font-0e8c1da {
+    font-family: var(--e-global-typography-0e8c1da-font-family);
+    font-size: var(--e-global-typography-0e8c1da-font-size);
+}
+
+
+/* Style pour les couleurs de Wordpress*/
+.wp-global-color-primary {
+    color: var(--e-global-color-primary);
+}
+
+.wp-global-color-secondary {
+    color: var(--e-global-color-secondary);
+}
+
+.wp-global-color-text {
+    color: var(--e-global-color-text);
+}
+
+.wp-global-color-accent {
+    color: var(--e-global-color-accent);
+}
+
+.wp-global-color-black {
+    color: var(--e-global-color-0aa45be);
+}
+
+.wp-global-color-prussian-blue {
+    color: var(--e-global-color-612e980);
+}
+
+.wp-global-color-white {
+    color: var(--e-global-color-78fd9a6);
+}
+
+.wp-global-color-olive-drab {
+    color: var(--e-global-color-0fc9762);
+}
+
+
+.wp-global-color-pale-gold {
+    color: var(--e-global-color-7c1812c);
+}
+
+.wp-global-a-color-taupe-gray {
+    color: var(--e-global-color-45bf206);
+}
+
+
+.wp-global-color-pale-orange {
+    color: var(--e-global-color-f54bda1);
+}
+
+.wp-global-color-orange {
+    color: var(--e-global-color-fecde5d);
+}
+
+.wp-global-color-forest-green {
+    color: var(--e-global-color-c8f7fa8);
+}
+
+
+.wp-global-color-pale-forest-green {
+    color: var(--e-global-color-287e948);
 }

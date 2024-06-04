@@ -1,14 +1,17 @@
+/**
+  @author: Olivier Cote (VictorConceptum)
+ */
 <template>
   <div v-if="isDeadLineSoon()" class="flex flex-col items-center mb-5">
     <h4 class=" mt-5 mb-10">Plus que quelques heures avant de passer votre commande</h4>
-    <p>{{ tempsRestants }}</p>
+    <p class="-tracking-2">{{ tempsRestants }}</p>
   </div>
 </template>
 <script>
 import dayjs from 'dayjs';
 export default {
   name: 'TimerMenu',
-  data(){
+  data() {
     return {
       timer: null,
       timeLeft: null,
@@ -42,7 +45,7 @@ export default {
      * @returns {boolean} Si la deadline est bientôt pour afficher le template
      */
     isDeadLineSoon() {
-      return !this.currentMenu.date_fin.timestamp - dayjs().unix() < 86400;
+      return window.location.hash == '#deadline' || this.currentMenu.date_fin.timestamp - dayjs().unix() < 86400;
     }
   },
   created() {
