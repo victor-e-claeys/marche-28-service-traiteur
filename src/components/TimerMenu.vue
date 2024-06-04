@@ -42,7 +42,7 @@ export default {
      * @returns {boolean} Si la deadline est bientôt pour afficher le template
      */
     isDeadLineSoon() {
-      return this.currentMenu.date_fin.timestamp - dayjs().unix() < 86400;
+      return window.location.hash == '#deadline' || this.currentMenu.date_fin.timestamp - dayjs().unix() < 86400;
     }
   },
   created() {

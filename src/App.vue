@@ -102,12 +102,52 @@ export default {
     currentMenu(){
       return this.menus?.find(menu => menu.id === this.currentMenuID);
     },
+    selection(){
+      return this.currentMenu.days.reduce(
+        (selection, day) => {
+          if(day.available)
+            Object.entries(day.products).reduce(
+              (selection, [type, product]) => {
+                if(product && type == 'collation' || day.selectionType == type){
+                  if(product.qty > 0)
+                    selection.push({
+                      menuID: this.currentMenu.id,
+                      dayID: day.dayNumber,
+                      productID: product.id,
+                      qty: product.qty,
+                    });
+                  if(product.variations)
+                    Object.values(product.variations).reduce(
+                      (selection, variation) => {
+                        if(variation.qty > 0){
+                          selection.push({
+                            menuID: this.currentMenu.id,
+                            dayID: day.dayNumber,
+                            productID: product.id,
+                            variationID: variation.id,
+                            qty: variation.qty,
+                          });
+                        }
+                        return selection;
+                      },
+                      selection
+                    );
+                }
+                return selection
+              },
+              selection
+            );
+            return selection;
+          },
+          []
+      );
+    }
   },
   watch: {
     currentMenu: {
       handler(menu) {
         if(!menu.isModified) menu.isModified = true;
-        console.log(menu);
+        console.log(menu, this.selection);
       },
       deep: true
     }
