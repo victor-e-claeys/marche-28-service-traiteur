@@ -1,3 +1,7 @@
+<script setup>
+  import Product from './Product.vue';
+</script>
+
 <template>
   <div>
     <h3>{{ modelValue.date.day }}</h3>
@@ -7,14 +11,18 @@
     <div @click="() => setSelectionType('pret_a_cuisiner')">
       Prêt à cuisiner
     </div>
-    <div>
-      {{modelValue.selectionType}}
+    <div v-if="modelValue.available">
+      <div v-if="modelValue.selectionType != 'pret_a_cuisiner' && modelValue.products.pret_a_manger">
+        <Product v-model="modelValue.products.pret_a_manger" />
+      </div>
+      <div v-if="modelValue.selectionType == 'pret_a_cuisiner' && modelValue.products.pret_a_cuisiner">
+        <Product v-model="modelValue.products.pret_a_cuisiner" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import dayjs from 'dayjs';
 export default {
   name: 'Day',
   props: {
