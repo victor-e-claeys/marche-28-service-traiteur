@@ -16,7 +16,7 @@ import WeekSelection from './components/WeekSelection.vue';
                         :currentMenuID="currentMenuID"
                         :currentMenu="currentMenu"
                         :setCurrentMenuID="setCurrentMenuID" />
-        <!--TimerMenu v-if="menus" v-model="currentMenu" /-->
+        <TimerMenu v-if="currentMenu" v-model="currentMenu" />
         <div v-if="currentMenu">
           <Day v-for="(day, index) in currentMenu.days" :key="index" v-model="currentMenu.days[index]" :setQuantity="setQuantity" />
         </div>

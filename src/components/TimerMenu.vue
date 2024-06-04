@@ -1,40 +1,40 @@
-<template v-if="">
+<template v-if="isDeadLineSoon()">
   <h1>Plus que quelques heures avant de passer votre commande</h1>
-<p>{{  }}</p>
+  <p>{{ }}</p>
 </template>
 <script>
 // Demandez comment mettre le style de h1 partout sur l'app
 import dayjs from 'dayjs';
-export default{
+export default {
   name: 'TimerMenu',
   props: {
     menus: {
       type: Array,
       required: true,
     },
+    currentMenu: {
+      type: Object,
+      required: true,
+    },
   },
-  data() {
-    return {
-      timer: null,
-      time: {
-        hours: 0,
-        minutes: 0,
-        seconds: 0,
-      },
-    };
-  },
+
   methods: {
     /**
      * Met à jour le timer
      */
     updateTimer() {
-      let now = dayjs();
-      let end = dayjs.unix(this.menus[0].date_fin.timestamp);
-      let diff = end.diff(now, 'second');
-      this.time.hours = Math.floor((diff % (60 * 60 * 24)) / (60 * 60));
-      this.time.minutes = Math.floor((diff % (60 * 60)) / 60);
-      this.time.seconds = Math.floor(diff % 60);
     },
+    isDeadLineSoon() {
+      if (this.currentMenu.date_fin.timestamp - dayjs().unix() < 86400) {
+        console.log("Pas encore de deadline")
+        return true;
+      } else {
+        console.log("Deadline en cours")
+        return false;
+
+      }
+
+    }
   },
   created() {
     this.updateTimer();

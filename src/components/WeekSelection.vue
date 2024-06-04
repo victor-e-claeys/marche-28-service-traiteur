@@ -8,7 +8,6 @@
       </a>
     </div>
   </div>
-    <pre>{{ currentMenu }}</pre>
 </template>
 
 <script>
