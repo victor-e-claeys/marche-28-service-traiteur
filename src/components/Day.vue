@@ -21,10 +21,6 @@ export default {
     modelValue: {
       type: Object,
       required: true
-    },
-    setQuantity: {
-      type: Function,
-      required: true
     }
   },
   emits: [

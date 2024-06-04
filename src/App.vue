@@ -20,7 +20,7 @@ import WeekSelection from './components/WeekSelection.vue';
         <div v-if="currentMenu">
           <Day v-for="(day, index) in currentMenu.days" :key="index" v-model="currentMenu.days[index]" :setQuantity="setQuantity" />
         </div>
-        <v-btn type="submit" block class="mt-2">Submit</v-btn>
+        <v-btn type="submit" block class="mt-4">Submit</v-btn>
       </v-form>
     </v-main>
   </v-app>
