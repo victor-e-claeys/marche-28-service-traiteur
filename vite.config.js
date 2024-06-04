@@ -7,6 +7,7 @@ import tailwindcss from 'tailwindcss'
 // Utilities
 import { defineConfig } from 'vite'
 import { fileURLToPath, URL } from 'node:url'
+import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -29,6 +30,7 @@ export default defineConfig({
       },
     }),
     tailwindcss(),
+    vueDevTools(),
   ],
   define: { 'process.env': {} },
   resolve: {

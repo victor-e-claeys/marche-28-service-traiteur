@@ -115,6 +115,7 @@ export default {
                       dayID: day.dayNumber,
                       productID: product.id,
                       qty: product.qty,
+                      price: product.price
                     });
                   if(product.variations)
                     Object.values(product.variations).reduce(
@@ -126,6 +127,7 @@ export default {
                             productID: product.id,
                             variationID: variation.id,
                             qty: variation.qty,
+                            price: variation.price
                           });
                         }
                         return selection;
