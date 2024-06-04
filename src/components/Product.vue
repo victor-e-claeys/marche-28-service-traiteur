@@ -2,7 +2,7 @@
   <div class="product">
     <img class="aspect-square object-cover	" :src="modelValue.image?.sizes.medium.url" :alt="modelValue.name" />
     <div class="product-details">
-      <h3>{{ modelValue.name }}</h3>
+      <h3 class="text-center">{{ modelValue.name }}</h3>
       <div v-if="modelValue.variations" class="product-options flex">
         <div class="product-qty" v-for="(variation, index) in modelValue.variations" :key="index">
           <v-number-input
