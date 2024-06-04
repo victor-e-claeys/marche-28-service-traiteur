@@ -2,7 +2,7 @@
   <div>
     <h1>{{ menuTitre() }}</h1>
     <div class="center">
-      <a class="square" v-for="menu in menus" :key="menu.id">
+      <a class="square" v-for="menu in menus" :key="menu.id" @click="() => setCurrentMenuID(menu.id)">
         <h3>{{ formattedDateToMonth(menu.date_debut.timestamp, menu.date_fin.timestamp) }}</h3>
         <p>{{ formattedDateNumberToNumber(menu.date_debut.timestamp, menu.date_fin.timestamp) }}</p>
       </a>
@@ -19,6 +19,10 @@ export default {
       type: Array,
       required: true,
     },
+    setCurrentMenuID: {
+      type: Function,
+      required: true
+    }
   },
   methods: {
     /**

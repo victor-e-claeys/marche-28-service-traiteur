@@ -1,7 +1,8 @@
 <script setup>
+import Day from './components/Day.vue';
+import TimerMenu from './components/TimerMenu.vue';
 import User from './components/User.vue';
 import WeekSelection from './components/WeekSelection.vue';
-import TimerMenu from './components/TimerMenu.vue';
 </script>
 <template>
   <v-app>
@@ -10,8 +11,11 @@ import TimerMenu from './components/TimerMenu.vue';
         <User />
       </v-container>
       <v-form @submit.prevent="submit">
-        <WeekSelection v-if="menus" :menus="menus" />
-        <TimerMenu v-if="menus" :menus="menus" />
+        <WeekSelection v-if="menus" :menus="menus" :currentMenuID="currentMenuID" :currentMenu="currentMenu" :setCurrentMenuID="setCurrentMenuID" />
+        <!--TimerMenu v-if="menus" v-model="currentMenu" /-->
+        <div v-if="currentMenu">
+          <Day v-for="(day, index) in currentMenu.days" :key="index" v-model="currentMenu.days[index]" :setQuantity="setQuantity" />
+        </div>
         <v-btn type="submit" block class="mt-2">Submit</v-btn>
       </v-form>
     </v-main>
@@ -23,12 +27,25 @@ export default {
   data() {
     return {
       users: false,
-      user: 0,
+      currentUserID: 0,
       portions: {},
       menus: null,
+      currentMenuID: null
     };
   },
   methods: {
+    setCurrentMenuID(menuID){
+      this.currentMenuID = menuID;
+    },
+    setQuantity({
+      quantity = 0,
+      menuId = this.currentMenuId,
+      productId = 0,
+      variationId = 0,
+      dayId = 0
+    }){
+      //TODO: Update quantities
+    },
     formattedPrice(price) {
       const options = {
         style: 'currency',
@@ -43,7 +60,7 @@ export default {
     },
     updateMenu() {
       const params = new URLSearchParams({
-        user: this.user,
+        user: this.currentUserID,
       });
       return fetch(this.apiURL(`marche28/v1/menu?${params.toString()}`))
         .then(response => response.json())
@@ -65,7 +82,7 @@ export default {
 
         //make sure to serialize your JSON body
         body: JSON.stringify({
-          user: this.user,
+          user: this.currentUserID,
           selection: this.selection
         })
       })
@@ -78,55 +95,9 @@ export default {
     },
   },
   computed: {
-    // a computed getter
-    selection() {
-      // `this` points to the component instance
-      return Object.values(this.menus).reduce((s, { term, products, includes }) => {
-        s[term.term_id] = Object.assign(
-          {},
-          products
-            ? Object.values(products).reduce((p, { id, qty, variations }) => {
-              p[id] = {
-                id,
-                qty,
-                variations: variations
-                  ? Object.values(variations).reduce((v, { id, qty }) => {
-                    v[id] = {
-                      id,
-                      qty
-                    }
-                    return v;
-                  }, {})
-                  : null
-              }
-              return p;
-            }, {})
-            : {},
-          includes ?
-            Object.values(includes).reduce((p, { products }) => {
-              Object.values(products).reduce((p, { id, qty, variations }) => {
-                p[id] = {
-                  id,
-                  qty,
-                  variations: variations
-                    ? Object.values(variations).reduce((v, { id, qty }) => {
-                      v[id] = {
-                        id,
-                        qty
-                      }
-                      return v;
-                    }, {})
-                    : null
-                }
-                return p;
-              }, p);
-              return p;
-            }, {})
-            : {}
-        );
-        return s;
-      }, {});
-    }
+    currentMenu(){
+      return this.menus?.find(menu => menu.id === this.currentMenuID);
+    },
   },
   created() {
     this.updateMenu();
