@@ -3,13 +3,15 @@
 </script>
 
 <template>
-  <div>
+  <div class="flex-1">
     <h3>{{ modelValue.date.day }}</h3>
-    <div @click="() => setSelectionType('pret_a_manger')">
-      Prêt à manger
-    </div>
-    <div @click="() => setSelectionType('pret_a_cuisiner')">
-      Prêt à cuisiner
+    <div v-if="modelValue.available && modelValue.products.pret_a_manger && modelValue.products.pret_a_cuisiner" class="flex selection-type">
+      <div @click="() => setSelectionType('pret_a_manger')">
+        Prêt à manger
+      </div>
+      <div @click="() => setSelectionType('pret_a_cuisiner')">
+        Prêt à cuisiner
+      </div>
     </div>
     <div v-if="modelValue.available">
       <div v-if="modelValue.selectionType != 'pret_a_cuisiner' && modelValue.products.pret_a_manger">

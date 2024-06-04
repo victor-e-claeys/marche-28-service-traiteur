@@ -3,10 +3,10 @@
     <img :src="modelValue.image?.sizes.medium.url" :alt="modelValue.name" />
     <div class="product-details">
       <h3>{{ modelValue.name }}</h3>
-      <div v-if="modelValue.variations" class="product-options">
+      <div v-if="modelValue.variations" class="product-options flex">
         <div class="product-qty" v-for="(variation, index) in modelValue.variations" :key="index">
           <v-number-input
-              v-model="modelValue.variations[index]"
+              v-model="modelValue.variations[index].qty"
               :reverse="false"
               controlVariant="stacked"
               label=""

@@ -16,7 +16,9 @@ export default defineConfig({
     }),
     // https://github.com/vuetifyjs/vuetify-loader/tree/master/packages/vite-plugin#readme
     vuetify({
-      autoImport: true,
+      autoImport: {
+        labs: true
+      },
     }),
     ViteFonts({
       google: {
