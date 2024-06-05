@@ -12,9 +12,9 @@ import WeekSelection from './components/WeekSelection.vue';
     <WeekSelection v-if="menus" :menus="menus" :currentMenuID="currentMenuID" :currentMenu="currentMenu"
       :setCurrentMenuID="setCurrentMenuID" />
     <TimerMenu v-if="currentMenu" v-model="currentMenu" :currentMenu="currentMenu" />
-    <div v-if="currentMenu" class="flex">
+    <div v-if="currentMenu" class="flex-1 flex justify-center flex-wrap	">
       <Day v-for="(day, index) in currentMenu.days" :key="index" v-model="currentMenu.days[index]"
-        :setQuantity="setQuantity" />
+        :setQuantity="setQuantity"  class="min-w-80 p-2 w-full sm:w-1/2 md:w-1/3 lg:w-1/5"/>
     </div>
     <div v-if="currentMenu">
       <p>Total: {{ moneyFormatter.format(total) }}</p>
