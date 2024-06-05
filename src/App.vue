@@ -7,7 +7,7 @@ import WeekSelection from './components/WeekSelection.vue';
 
 <template>
     <!--User /-->
-  <v-form @submit.prevent="submit">
+  <div>
     <WeekSelection v-if="menus" :menus="menus" :currentMenuID="currentMenuID" :currentMenu="currentMenu"
       :setCurrentMenuID="setCurrentMenuID" />
     <TimerMenu v-if="currentMenu" v-model="currentMenu" :currentMenu="currentMenu" />
@@ -15,10 +15,41 @@ import WeekSelection from './components/WeekSelection.vue';
       <Day v-for="(day, index) in currentMenu.days" :key="index" v-model="currentMenu.days[index]" class="min-w-80 p-2 w-full sm:w-1/2 md:w-1/3 lg:w-1/5"/>
     </div>
     <div v-if="currentMenu">
-      <p>Total: {{ moneyFormatter.format(total) }}</p>
+      <v-checkbox v-model="currentMenu.conditionsAccepted">
+        <template v-slot:label>
+          <div>
+            J'accepte les <a :href="conditionsURL" target="_blank">conditions d'utilisation</a>
+          </div>
+        </template>
+      </v-checkbox>
+      <div class="flex">
+        <div class="actions flex flex-column items-start">
+          <v-btn  
+            @click="submit"
+            color="primary" 
+            :disabled="!currentMenu.conditionsAccepted">
+            Confirmer ma sélection
+          </v-btn>
+          <a 
+            @click="skip" 
+            :class="{
+              'opacity-25': !currentMenu.conditionsAccepted
+            }">
+            Sauter cette semaine
+          </a>
+        </div>
+        <div class="errors">
+          <v-banner
+            icon="mdi-alert-circle"
+            text="Ceci est une erreur"
+            :stacked="false" />
+        </div>
+        <div class="order-total flex-grow text-right">
+          Total : {{ moneyFormatter.format(total) }}
+        </div>
+      </div>
     </div>
-    <v-btn type="submit" block class="mt-2">Submit</v-btn>
-  </v-form>
+  </div>  
 </template>
 <script>
 export default {
@@ -29,7 +60,8 @@ export default {
       currentUserID: 0,
       portions: {},
       menus: null,
-      currentMenuID: null
+      currentMenuID: null,
+      conditionsURL: '#'
     };
   },
   methods: {
