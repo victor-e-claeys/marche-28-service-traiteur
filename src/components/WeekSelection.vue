@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 v-if="currentMenu" class="text-center wp-font-primary">{{ menuTitre() }}</h1>
-    <div class="flex gap-[50px] mt-6 mb-6 justify-center">
+    <div class="flex lg:gap-[50px] mt-6 mb-6 justify-center flex-wrap gap-4">
       <a :class="{
         square: true,
         active: currentMenuID == menu.id,

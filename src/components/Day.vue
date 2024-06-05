@@ -5,7 +5,8 @@
 <template>
   <div class="flex flex-col">
     <h3 class="text-center uppercase ">{{ modelValue.date.day }}</h3>
-    <div v-if="modelValue.available && modelValue.products.pret_a_manger && modelValue.products.pret_a_cuisiner" class="flex selection-type justify-center">
+    <div v-if="modelValue.available && modelValue.products.pret_a_manger && modelValue.products.pret_a_cuisiner" 
+    class="flex selection-type justify-center">
       <v-btn v-for="(label, key) in selectionTypes" :key="key" rounded="0" size="small" variant="flat" @click="() => setSelectionType(key)">
         {{ label }}
       </v-btn>
