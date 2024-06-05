@@ -5,6 +5,10 @@
 <template>
   <div class="flex flex-col">
     <h3 class="text-center uppercase ">{{ modelValue.date.day }}</h3>
+    <div v-if="!modelValue.available" class="flex flex-col flex-grow">
+      <h3 class="text-center title-unavailable">Non disponible</h3>
+      <div class="box-unavailable flex-grow"></div>
+    </div>
     <div v-if="modelValue.available && modelValue.products.pret_a_manger && modelValue.products.pret_a_cuisiner" class="flex selection-type justify-center">
       <v-btn v-for="(label, key) in selectionTypes" :key="key" rounded="0" size="small" variant="flat" @click="() => setSelectionType(key)">
         {{ label }}
@@ -18,10 +22,9 @@
         <Product v-model="modelValue.products.pret_a_cuisiner" />
       </div>
     </div>
-
-    <div v-if="!modelValue.available" class="flex flex-col flex-grow">
-      <h3 class="text-center title-unavailable">Non disponible</h3>
-      <div class="box-unavailable flex-grow"></div>
+    <div v-if="modelValue.products.collation" class="collation">
+      <h3>Collation</h3>
+      <Product v-model="modelValue.products.collation" />
     </div>
   </div>
 </template>
