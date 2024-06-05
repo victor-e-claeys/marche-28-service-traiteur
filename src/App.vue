@@ -6,7 +6,6 @@ import WeekSelection from './components/WeekSelection.vue';
 </script>
 
 <template>
-  <v-container>
     <!--User /-->
   <v-form @submit.prevent="submit">
     <WeekSelection v-if="menus" :menus="menus" :currentMenuID="currentMenuID" :currentMenu="currentMenu"
@@ -20,7 +19,6 @@ import WeekSelection from './components/WeekSelection.vue';
     </div>
     <v-btn type="submit" block class="mt-2">Submit</v-btn>
   </v-form>
-  </v-container>
 </template>
 <script>
 export default {

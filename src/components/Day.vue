@@ -10,7 +10,7 @@
       <div class="box-unavailable flex-grow"></div>
     </div>
     <div v-if="modelValue.available && modelValue.products.pret_a_manger && modelValue.products.pret_a_cuisiner" class="flex selection-type justify-center">
-      <v-btn v-for="(label, key) in selectionTypes" :key="key" rounded="0" size="small" variant="flat" @click="() => setSelectionType(key)">
+      <v-btn v-for="(label, key) in selectionTypes" :key="key" size="small" @click="() => setSelectionType(key)">
         {{ label }}
       </v-btn>
     </div>
