@@ -6,7 +6,7 @@
   <div class="flex flex-col">
     <h3 class="text-center uppercase ">{{ modelValue.date.day }}</h3>
     <div v-if="modelValue.available && modelValue.products.pret_a_manger && modelValue.products.pret_a_cuisiner" class="flex selection-type justify-center">
-      <v-btn v-for="(label, key) in repas" :key="key" rounded="0" size="small" variant="flat" @click="() => setSelectionType(key)">
+      <v-btn v-for="(label, key) in selectionTypes" :key="key" rounded="0" size="small" variant="flat" @click="() => setSelectionType(key)">
         {{ label }}
       </v-btn>
     </div>
@@ -43,13 +43,8 @@ export default {
       this.$emit('update:modelValue', { ...this.modelValue, selectionType: type });
     }
   },
-  computed:{
-    repas() {
-      return {
-        pret_a_manger: "Prêt à manger",
-        pret_a_cuisiner: "Prêt à cuisiner"
-      };
-    }
+  created(){
+    if(!this.selectionType) this.setSelectionType('pret_a_manger');
   }
 }
 </script>

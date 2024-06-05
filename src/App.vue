@@ -102,43 +102,43 @@ export default {
     selection(){
       return this.currentMenu.days.reduce(
         (selection, day) => {
-          if(day.available)
-            Object.entries(day.products).reduce(
-              (selection, [type, product]) => {
-                if(product && type == 'collation' || day.selectionType == type){
-                  if(product.qty > 0)
-                    selection.push({
-                      menuID: this.currentMenu.id,
-                      dayID: day.dayNumber,
-                      productID: product.id,
-                      qty: product.qty,
-                      price: product.price
-                    });
-                  if(product.variations)
-                    Object.values(product.variations).reduce(
-                      (selection, variation) => {
-                        if(variation.qty > 0){
-                          selection.push({
-                            menuID: this.currentMenu.id,
-                            dayID: day.dayNumber,
-                            productID: product.id,
-                            variationID: variation.id,
-                            qty: variation.qty,
-                            price: variation.price
-                          });
-                        }
-                        return selection;
-                      },
-                      selection
-                    );
-                }
-                return selection
-              },
-              selection
-            );
-            return selection;
-          },
-          []
+          if(!day.available) return selection;
+          Object.entries(day.products).reduce(
+            (selection, [type, product]) => {
+              if(!product) return selection;
+              if(this.selectionTypes[type] && day.selectionType != type) return selection;
+              if(product.qty > 0)
+                selection.push({
+                  menuID: this.currentMenu.id,
+                  dayID: day.dayNumber,
+                  productID: product.id,
+                  qty: product.qty,
+                  price: product.price
+                });
+              if(product.variations)
+                Object.values(product.variations).reduce(
+                  (selection, variation) => {
+                    if(variation.qty > 0){
+                      selection.push({
+                        menuID: this.currentMenu.id,
+                        dayID: day.dayNumber,
+                        productID: product.id,
+                        variationID: variation.id,
+                        qty: variation.qty,
+                        price: variation.price
+                      });
+                    }
+                    return selection;
+                  },
+                  selection
+                );
+              return selection
+            },
+            selection
+          );
+          return selection;
+        },
+        []
       );
     },
     total(){
