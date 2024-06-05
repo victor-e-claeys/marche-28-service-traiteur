@@ -13,8 +13,7 @@ import WeekSelection from './components/WeekSelection.vue';
       :setCurrentMenuID="setCurrentMenuID" />
     <TimerMenu v-if="currentMenu" v-model="currentMenu" :currentMenu="currentMenu" />
     <div v-if="currentMenu" class="flex">
-      <Day v-for="(day, index) in currentMenu.days" :key="index" v-model="currentMenu.days[index]"
-        :setQuantity="setQuantity" />
+      <Day v-for="(day, index) in currentMenu.days" :key="index" v-model="currentMenu.days[index]" />
     </div>
     <div v-if="currentMenu">
       <p>Total: {{ moneyFormatter.format(total) }}</p>
@@ -38,26 +37,6 @@ export default {
   methods: {
     setCurrentMenuID(menuID) {
       this.currentMenuID = menuID;
-    },
-    setQuantity({
-      quantity = 0,
-      menuId = this.currentMenuId,
-      productId = 0,
-      variationId = 0,
-      dayId = 0
-    }) {
-    },
-    formattedPrice(price) {
-      const options = {
-        style: 'currency',
-        currency: 'CAD',
-        currencyDisplay: 'symbol'
-      };
-      const formatter = new Intl.NumberFormat('fr-CA', options);
-      return formatter.format(price);
-    },
-    log() {
-      console.log(arguments);
     },
     updateMenu() {
       const params = new URLSearchParams({
@@ -109,7 +88,6 @@ export default {
               if(this.selectionTypes[type] && day.selectionType != type) return selection;
               if(product.qty > 0)
                 selection.push({
-                  menuID: this.currentMenu.id,
                   dayID: day.dayNumber,
                   productID: product.id,
                   qty: product.qty,
@@ -120,7 +98,6 @@ export default {
                   (selection, variation) => {
                     if(variation.qty > 0){
                       selection.push({
-                        menuID: this.currentMenu.id,
                         dayID: day.dayNumber,
                         productID: product.id,
                         variationID: variation.id,

@@ -6,14 +6,7 @@
       <div class="variations" v-if="modelValue.variations">
         <div class="variation-details flex">
           <div class="variation-qty" v-for="(variation, index) in modelValue.variations" :key="index">
-            <v-number-input 
-              controlVariant="stacked"
-              v-model="modelValue.variations[index].qty" 
-              :reverse="false" 
-              :label="variationName(variation)" 
-              :hideInput="false" 
-              :inset="false" 
-            />
+            <NumberInput v-model="modelValue.variations[index].qty" :label="variationName(variation)" :min="variation.attributes?.pa_portions == 'enfant' ? 4 : null" />
           </div>
         </div>
         <div class="variations-price-data" v-for="(variation, index) in modelValue.variations" :key="index">
@@ -33,13 +26,7 @@
       </div>
       <div v-if="!modelValue.variations" class="product-details">
         <div class="product-qty">
-          <v-number-input 
-            controlVariant="stacked"
-            v-model="modelValue.qty" 
-            :reverse="false" 
-            :hideInput="false" 
-            :inset="false" 
-          />
+          <NumberInput v-model="modelValue.qty" />
         </div>
         <div class="product-price-data">
           <span class="product-price">
@@ -56,6 +43,10 @@
     </div>
   </div>
 </template>
+
+<script setup>
+import NumberInput from './NumberInput.vue';
+</script>
 
 <script>
 export default {
