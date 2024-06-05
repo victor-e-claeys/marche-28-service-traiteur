@@ -1,104 +1,183 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /*    Style pour chaque police de Wordpress. */
+#app {
+  --e-global-color-primary: #B7B8A5;
+  --e-global-color-secondary: #273043;
+  --e-global-color-text: #7A7A7A;
+  --e-global-color-accent: #E7D89F;
+  --e-global-color-0aa45be: #000000;
+  --e-global-color-612e980: #273043;
+  --e-global-color-78fd9a6: #FFFFFF;
+  --e-global-color-0fc9762: #B7B8A5;
+  --e-global-color-7c1812c: #E7D89F;
+  --e-global-color-7b6c9a2: #EDEDE8;
+  --e-global-color-5eaf9c2: #F4F5F8;
+  --e-global-color-45bf206: #C7B9A6;
+  --e-global-color-f54bda1: #F4A469;
+  --e-global-color-fecde5d: #EE8339;
+  --e-global-color-facc16e: #FFFAF7;
+  --e-global-color-c8f7fa8: #748752;
+  --e-global-color-03084f2: #F0F1DB;
+  --e-global-color-287e948: #B6C369;
+  --e-global-color-b335789: #FEFFFE;
+  --e-global-typography-primary-font-family: "Open Sans";
+  --e-global-typography-primary-font-weight: 700;
+  --e-global-typography-secondary-font-family: "Open Sans";
+  --e-global-typography-secondary-font-weight: 400;
+  --e-global-typography-secondary-line-height: 1.25em;
+  --e-global-typography-secondary-letter-spacing: 0.2em;
+  --e-global-typography-text-font-family: "Sarabun";
+  --e-global-typography-text-font-weight: 400;
+  --e-global-typography-accent-font-family: "Open Sans";
+  --e-global-typography-accent-font-weight: 900;
+  --e-global-typography-02f76c9-font-family: "Open Sans";
+  --e-global-typography-02f76c9-font-size: 0.8rem;
+  --e-global-typography-02f76c9-font-weight: 400;
+  --e-global-typography-942e05b-font-family: "Open Sans";
+  --e-global-typography-942e05b-font-size: 2rem;
+  --e-global-typography-942e05b-font-weight: 700;
+  --e-global-typography-0e8c1da-font-family: "Sarabun";
+  --e-global-typography-0e8c1da-font-size: 18px;
+  --color-weekSelection-selected: var(--e-global-color-287e948);
+  --color-weekSelection-unselected: var(--e-global-color-45bf206);
+  --color-weekSelection-selectionMade: var(--e-global-color-287e948);
+  --color-weekSelection-skip:var(--e-global-color-fecde5d);
+  --color-day-title-unavailable:var(--e-global-color-fecde5d);
+  --color-day-box-unavailable:var(--e-global-color-f54bda1);
+}
+
 .wp-font-primary {
-    font-family: var(--e-global-typography-primary-font-family);
-    font-weight: var(--e-global-typography-primary-font-weight);
+  font-family: var(--e-global-typography-primary-font-family);
+  font-weight: var(--e-global-typography-primary-font-weight);
 }
 
 .wp-font-secondary {
-    font-family: var(--e-global-typography-secondary-font-family);
-    font-weight: var(--e-global-typography-secondary-font-weight);
-    line-height: var(--e-global-typography-secondary-line-height);
-    letter-spacing: var(--e-global-typography-secondary-letter-spacing);
+  font-family: var(--e-global-typography-secondary-font-family);
+  font-weight: var(--e-global-typography-secondary-font-weight);
+  line-height: var(--e-global-typography-secondary-line-height);
+  letter-spacing: var(--e-global-typography-secondary-letter-spacing);
 }
 
 .wp-font-text {
-    font-family: var(--e-global-typography-text-font-family);
-    font-weight: var(--e-global-typography-text-font-weight);
+  font-family: var(--e-global-typography-text-font-family);
+  font-weight: var(--e-global-typography-text-font-weight);
 }
 
 .wp-font-accent {
-    font-family: var(--e-global-typography-accent-font-family);
-    font-weight: var(--e-global-typography-accent-font-weight);
+  font-family: var(--e-global-typography-accent-font-family);
+  font-weight: var(--e-global-typography-accent-font-weight);
 }
 
 .wp-font-02f76c9 {
-    font-family: var(--e-global-typography-02f76c9-font-family);
-    font-size: var(--e-global-typography-02f76c9-font-size);
-    font-weight: var(--e-global-typography-02f76c9-font-weight);
+  font-family: var(--e-global-typography-02f76c9-font-family);
+  font-size: var(--e-global-typography-02f76c9-font-size);
+  font-weight: var(--e-global-typography-02f76c9-font-weight);
 }
 
 .wp-font-942e05b {
-    font-family: var(--e-global-typography-942e05b-font-family);
-    font-size: var(--e-global-typography-942e05b-font-size);
-    font-weight: var(--e-global-typography-942e05b-font-weight);
+  font-family: var(--e-global-typography-942e05b-font-family);
+  font-size: var(--e-global-typography-942e05b-font-size);
+  font-weight: var(--e-global-typography-942e05b-font-weight);
 }
 
 .wp-font-0e8c1da {
-    font-family: var(--e-global-typography-0e8c1da-font-family);
-    font-size: var(--e-global-typography-0e8c1da-font-size);
+  font-family: var(--e-global-typography-0e8c1da-font-family);
+  font-size: var(--e-global-typography-0e8c1da-font-size);
 }
 
 
 /* Style pour les couleurs de Wordpress*/
 .wp-global-color-primary {
-    color: var(--e-global-color-primary);
+  color: var(--e-global-color-primary);
 }
 
 .wp-global-color-secondary {
-    color: var(--e-global-color-secondary);
+  color: var(--e-global-color-secondary);
 }
 
 .wp-global-color-text {
-    color: var(--e-global-color-text);
+  color: var(--e-global-color-text);
 }
 
 .wp-global-color-accent {
-    color: var(--e-global-color-accent);
+  color: var(--e-global-color-accent);
 }
 
 .wp-global-color-black {
-    color: var(--e-global-color-0aa45be);
+  color: var(--e-global-color-0aa45be);
 }
 
 .wp-global-color-prussian-blue {
-    color: var(--e-global-color-612e980);
+  color: var(--e-global-color-612e980);
 }
 
 .wp-global-color-white {
-    color: var(--e-global-color-78fd9a6);
+  color: var(--e-global-color-78fd9a6);
 }
 
 .wp-global-color-olive-drab {
-    color: var(--e-global-color-0fc9762);
+  color: var(--e-global-color-0fc9762);
 }
 
 
 .wp-global-color-pale-gold {
-    color: var(--e-global-color-7c1812c);
+  color: var(--e-global-color-7c1812c);
 }
 
 .wp-global-a-color-taupe-gray {
-    color: var(--e-global-color-45bf206);
+  color: var(--e-global-color-45bf206);
 }
 
 
 .wp-global-color-pale-orange {
-    color: var(--e-global-color-f54bda1);
+  color: var(--e-global-color-f54bda1);
 }
 
 .wp-global-color-orange {
-    color: var(--e-global-color-fecde5d);
+  color: var(--e-global-color-fecde5d);
 }
 
 .wp-global-color-forest-green {
-    color: var(--e-global-color-c8f7fa8);
+  color: var(--e-global-color-c8f7fa8);
 }
 
-
 .wp-global-color-pale-forest-green {
-    color: var(--e-global-color-287e948);
+  color: var(--e-global-color-287e948);
+}
+
+/** Style global pour le reste de l'application 
+    METTRE VOS CHANGEMENT EN-DESSOUS !          */
+
+.square {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  border: 3px solid var(--color-weekSelection-unselected);
+}
+.square.selection_made{
+  border-color:var(--color-weekSelection-selectionMade);
+  background-color: var(--color-weekSelection-selectionMade);
+}
+.square.skip{
+  border-color:var(--color-weekSelection-skip);
+  background-color: var(--color-weekSelection-skip)
+}
+.square.active {
+  border-color: var(--color-weekSelection-selected);
+}
+.title-unavailable{
+  padding: 0.5em;
+  background-color: var(--color-day-title-unavailable);
+  color:#F0F1DB
+}
+.box-unavailable{
+  max-height:100%;
+  background-color: var(--color-day-box-unavailable);
 }
