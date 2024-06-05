@@ -48,6 +48,10 @@
   --color-weekSelection-skip: var(--e-global-color-fecde5d);
   --color-day-title-unavailable: var(--e-global-color-fecde5d);
   --color-day-box-unavailable: var(--e-global-color-f54bda1);
+  --color-pret-a-bg-active: var(--e-global-color-287e948);
+  --color-pret-a-bg-inactive: #E1E1E1;
+  --color-pret-a-text-inactive: #aaaaaa;
+
 }
 
 .wp-font-primary {
@@ -192,11 +196,11 @@
 }
 
 .selection-type-button.active {
-  background-color: var(--color-weekSelection-selected);
+  background-color: var(--color-pret-a-bg-active);
   color: var(--e-global-color-white);
 }
 
 .selection-type-button:not(.active) {
-  background-color: var(--color-weekSelection-unselected);
-  color: var(--e-global-color-black);
+  background-color: var(--color-pret-a-bg-inactive);
+  color: var(--color-pret-a-text-inactive);
 }
