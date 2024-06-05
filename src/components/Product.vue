@@ -1,16 +1,16 @@
 <template>
   <div class="product flex flex-col justify-center ">
     <img class="aspect-square object-cover	" :src="modelValue.image?.sizes.medium.url" :alt="modelValue.name" />
-    <div class="product-details p-3 flex flex-column items-center">
-      <h3 class="text-center">{{ modelValue.name }}</h3>
+    <div class="product-details p-3 flex flex-column items-center align-center">
+      <h3 class="text-left wp-font-text text-lg">{{ modelValue.name }}</h3>
       <div class="variations flex flex-col items-center" v-if="modelValue.variations">
         <div class="variation-details flex">
           <div class="variation-qty flex" v-for="(variation, index) in modelValue.variations" :key="index">
             <NumberInput v-model="modelValue.variations[index].qty" :label="variationName(variation)" :min="variation.attributes?.pa_portions == 'enfant' ? 4 : null" />
           </div>
         </div>
-        <div class="variations-price-data flex gap-1" v-for="(variation, index) in modelValue.variations" :key="index">
-          <span class="variation-name">
+        <div class="variations-price-data flex gap-1 wp-font-text text-sm align-middle items-center" v-for="(variation, index) in modelValue.variations" :key="index">
+          <span class="variation-name text-xs">
             {{ variationName(variation) }}
           </span>
           <span class="variation-price">
