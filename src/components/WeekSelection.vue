@@ -25,11 +25,11 @@ export default {
     },
     currentMenuID: {
       type: Number,
-      required: true
+      required: false
     },
     currentMenu: {
       type: Object,
-      required: true
+      required: false
     }
   },
   methods: {

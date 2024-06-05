@@ -18,10 +18,6 @@ export default {
     }
   },
   props: {
-    menus: {
-      type: Array,
-      required: true,
-    },
     currentMenu: {
       type: Object,
       required: true,

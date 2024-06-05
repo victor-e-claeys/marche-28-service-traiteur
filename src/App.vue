@@ -6,26 +6,22 @@ import WeekSelection from './components/WeekSelection.vue';
 </script>
 
 <template>
-  <v-app>
-    <v-main>
-      <v-container>
-        <User />
-      </v-container>
-      <v-form @submit.prevent="submit">
-        <WeekSelection v-if="menus" :menus="menus" :currentMenuID="currentMenuID" :currentMenu="currentMenu"
-          :setCurrentMenuID="setCurrentMenuID" />
-        <TimerMenu v-if="currentMenu" v-model="currentMenu" :currentMenu="currentMenu" />
-        <div v-if="currentMenu" class="flex">
-          <Day v-for="(day, index) in currentMenu.days" :key="index" v-model="currentMenu.days[index]"
-            :setQuantity="setQuantity" />
-        </div>
-        <div v-if="currentMenu">
-          <p>Total: {{ totalPrice }} $</p>
-        </div>
-        <v-btn type="submit" block class="mt-2">Submit</v-btn>
-      </v-form>
-    </v-main>
-  </v-app>
+  <v-container>
+    <!--User /-->
+  <v-form @submit.prevent="submit">
+    <WeekSelection v-if="menus" :menus="menus" :currentMenuID="currentMenuID" :currentMenu="currentMenu"
+      :setCurrentMenuID="setCurrentMenuID" />
+    <TimerMenu v-if="currentMenu" v-model="currentMenu" :currentMenu="currentMenu" />
+    <div v-if="currentMenu" class="flex">
+      <Day v-for="(day, index) in currentMenu.days" :key="index" v-model="currentMenu.days[index]"
+        :setQuantity="setQuantity" />
+    </div>
+    <div v-if="currentMenu">
+      <p>Total: {{ totalPrice }} $</p>
+    </div>
+    <v-btn type="submit" block class="mt-2">Submit</v-btn>
+  </v-form>
+  </v-container>
 </template>
 <script>
 export default {
