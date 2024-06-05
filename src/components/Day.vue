@@ -5,12 +5,20 @@
 <template>
   <div class="flex flex-col">
     <h3 class="text-center uppercase ">{{ modelValue.date.day }}</h3>
-    <div v-if="!modelValue.available" class="flex selection-type justify-center">
+    <div v-if="!modelValue.available" class="flex flex-col selection-type justify-center flex-grow">
       <h3 class="text-center title-unavailable">Non disponible</h3>
       <div class="box-unavailable flex-grow"></div>
     </div>
-    <div v-if="modelValue.available && modelValue.products.pret_a_manger && modelValue.products.pret_a_cuisiner" class="flex selection-type justify-center">
-      <v-btn v-for="(label, key) in selectionTypes" :key="key" size="small" @click="() => setSelectionType(key)">
+    <div v-if="modelValue.available && modelValue.products.pret_a_manger && modelValue.products.pret_a_cuisiner" class="flex selection-type justify-center w-full">
+      <v-btn 
+        v-for="(label, key) in selectionTypes"
+        size="small"
+        :key="key"
+        :class="{
+          'selection-type-button': true,
+          active: modelValue.selectionType == key
+        }"
+        @click="() => setSelectionType(key)">
         {{ label }}
       </v-btn>
     </div>
@@ -44,6 +52,7 @@ export default {
   methods: {
     setSelectionType(type){ // "pret_a_manger" ou "pret_a_cuisiner"
       this.$emit('update:modelValue', { ...this.modelValue, selectionType: type });
+
     }
   },
   created(){

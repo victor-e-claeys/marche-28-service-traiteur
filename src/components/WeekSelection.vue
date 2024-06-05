@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 v-if="currentMenu" class="text-center wp-font-primary">{{ menuTitre() }}</h1>
+    <h1 v-if="currentMenu" class="text-center wp-font-primary text-2xl">{{ menuTitre() }}</h1>
     <div class="flex lg:gap-[50px] mt-6 mb-6 justify-center flex-wrap gap-4">
       <a :class="{
         square: true,
@@ -8,8 +8,8 @@
         selection_made: menu.selection_made,
         skip: menu.skip
       }" v-for="menu in menus" :key="menu.id" @click="() => setCurrentMenuID(menu.id)">
-        <h3>{{ formattedDateToMonth(menu.date_debut.timestamp, menu.date_fin.timestamp) }}</h3>
-        <p>{{ formattedDateNumberToNumber(menu.date_debut.timestamp, menu.date_fin.timestamp) }}</p>
+        <h3 class="wp-font-text ">{{ formattedDateToMonth(menu.date_debut.timestamp, menu.date_fin.timestamp) }}</h3>
+        <p class="wp-font-text">{{ formattedDateNumberToNumber(menu.date_debut.timestamp, menu.date_fin.timestamp) }}</p>
       </a>
     </div>
   </div>
