@@ -5,7 +5,7 @@
 <template>
   <div class="flex flex-col">
     <h3 class="text-center uppercase ">{{ modelValue.date.day }}</h3>
-    <div v-if="!modelValue.available" class="flex selection-type justify-center">
+    <div v-if="!modelValue.available" class="flex flex-col selection-type justify-center flex-grow">
       <h3 class="text-center title-unavailable">Non disponible</h3>
       <div class="box-unavailable flex-grow"></div>
     </div>
@@ -15,6 +15,7 @@
         size="small"
         :key="key"
         :class="{
+          'flex-grow': true,
           'selection-type-button': true,
           active: modelValue.selectionType == key
         }"
@@ -52,6 +53,7 @@ export default {
   methods: {
     setSelectionType(type){ // "pret_a_manger" ou "pret_a_cuisiner"
       this.$emit('update:modelValue', { ...this.modelValue, selectionType: type });
+
     }
   },
   created(){

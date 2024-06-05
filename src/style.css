@@ -45,9 +45,9 @@
   --color-weekSelection-selected: var(--e-global-color-287e948);
   --color-weekSelection-unselected: var(--e-global-color-45bf206);
   --color-weekSelection-selectionMade: var(--e-global-color-287e948);
-  --color-weekSelection-skip:var(--e-global-color-fecde5d);
-  --color-day-title-unavailable:var(--e-global-color-fecde5d);
-  --color-day-box-unavailable:var(--e-global-color-f54bda1);
+  --color-weekSelection-skip: var(--e-global-color-fecde5d);
+  --color-day-title-unavailable: var(--e-global-color-fecde5d);
+  --color-day-box-unavailable: var(--e-global-color-f54bda1);
 }
 
 .wp-font-primary {
@@ -155,32 +155,48 @@
 .square {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
   width: 100px;
   height: 100px;
   border: 3px solid var(--color-weekSelection-unselected);
 }
-.square.selection_made{
-  border-color:var(--color-weekSelection-selectionMade);
+
+.square.selection_made {
+  border-color: var(--color-weekSelection-selectionMade);
   background-color: var(--color-weekSelection-selectionMade);
 }
-.square.skip{
-  border-color:var(--color-weekSelection-skip);
+
+.square.skip {
+  border-color: var(--color-weekSelection-skip);
   background-color: var(--color-weekSelection-skip)
 }
+
 .square.active {
   border-color: var(--color-weekSelection-selected);
 }
-.title-unavailable{
+
+.title-unavailable {
   padding: 0.5em;
   background-color: var(--color-day-title-unavailable);
-  color:#F0F1DB
+  color: #F0F1DB
 }
-.box-unavailable{
-  max-height:100%;
+
+.box-unavailable {
+  max-height: 100%;
   background-color: var(--color-day-box-unavailable);
 }
-.variation-total::before{
-  content:"| "
+
+.variation-total::before {
+  content: "| "
+}
+
+.selection-type-button.active {
+  background-color: var(--color-weekSelection-selected);
+  color: var(--e-global-color-white);
+}
+
+.selection-type-button:not(.active) {
+  background-color: var(--color-weekSelection-unselected);
+  color: var(--e-global-color-black);
 }

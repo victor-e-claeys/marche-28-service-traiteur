@@ -1,10 +1,28 @@
 /**
-  @author: Olivier Cote (VictorConceptum)
- */
+@author: Olivier Cote (VictorConceptum)
+*/
 <template>
   <div v-if="isDeadLineSoon()" class="flex flex-col items-center mb-5">
-    <h4 class=" mt-5 mb-10">Plus que quelques heures avant de passer votre commande</h4>
-    <p class="-tracking-2">{{ tempsRestants }}</p>
+    <h4 class="mt-5 mb-10 wp-font-primary text-lg wp-global-color-orange">Plus que quelques heures avant de passer votre
+      commande</h4>
+    <div class="grid">
+      <div class="grid grid-cols-5 gap-2">
+        <div class="flex flex-col items-center">
+          <h4 class="wp-font-primary text-lg ">{{ tempsRestants[0] }}</h4>
+          <p class="wp-font-text text-sm">Heures</p>
+        </div>
+        <span class="text-center"> : </span>
+        <div class="flex flex-col items-center">
+          <h4 class="wp-font-primary text-lg">{{ tempsRestants[1] }}</h4>
+          <p class="wp-font-text text-sm">Minutes</p>
+        </div>
+        <span class="text-center"> : </span>
+        <div class="flex flex-col items-center">
+          <h4 class="wp-font-primary text-lg">{{ tempsRestants[2] }}</h4>
+          <p class="wp-font-text text-sm">Secondes</p>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -63,7 +81,9 @@ export default {
       let heures = Math.floor(this.timeLeft / 3600);
       let minutes = Math.floor((this.timeLeft % 3600) / 60);
       let secondes = this.timeLeft % 60;
-      return `${heures} : ${minutes} : ${String(secondes).padStart(2, '0')}`
+      // On retourne un array avec les heures, minutes et secondes formatées avec un 0 devant si < 10
+      // array[0] sera les heures et vice versa
+      return [`${heures < 10 ? '0' + heures : heures}`, `${minutes < 10 ? '0' + minutes : minutes}`, `${secondes < 10 ? '0' + secondes : secondes}`];
     }
   }
 };
