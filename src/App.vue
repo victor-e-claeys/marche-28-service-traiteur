@@ -17,7 +17,7 @@ import WeekSelection from './components/WeekSelection.vue';
         :setQuantity="setQuantity" />
     </div>
     <div v-if="currentMenu">
-      <p>Total: {{ totalPrice }} $</p>
+      <p>Total: {{ moneyFormatter.format(total) }}</p>
     </div>
     <v-btn type="submit" block class="mt-2">Submit</v-btn>
   </v-form>
@@ -32,8 +32,7 @@ export default {
       currentUserID: 0,
       portions: {},
       menus: null,
-      currentMenuID: null,
-      totalPrice:0
+      currentMenuID: null
     };
   },
   methods: {
@@ -100,7 +99,6 @@ export default {
     currentMenu() {
       return this.menus?.find(menu => menu.id === this.currentMenuID);
     },
-
     selection(){
       return this.currentMenu.days.reduce(
         (selection, day) => {
@@ -141,6 +139,12 @@ export default {
             return selection;
           },
           []
+      );
+    },
+    total(){
+      return this.selection.reduce(
+        (total, item) => total + item.price * item.qty,
+        0
       );
     }
   },
