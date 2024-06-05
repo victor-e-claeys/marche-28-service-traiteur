@@ -6,22 +6,19 @@ import WeekSelection from './components/WeekSelection.vue';
 </script>
 
 <template>
-  <v-container>
     <!--User /-->
   <v-form @submit.prevent="submit">
     <WeekSelection v-if="menus" :menus="menus" :currentMenuID="currentMenuID" :currentMenu="currentMenu"
       :setCurrentMenuID="setCurrentMenuID" />
     <TimerMenu v-if="currentMenu" v-model="currentMenu" :currentMenu="currentMenu" />
     <div v-if="currentMenu" class="flex-1 flex justify-center flex-wrap	">
-      <Day v-for="(day, index) in currentMenu.days" :key="index" v-model="currentMenu.days[index]"
-        :setQuantity="setQuantity"  class="min-w-80 p-2 w-full sm:w-1/2 md:w-1/3 lg:w-1/5"/>
+      <Day v-for="(day, index) in currentMenu.days" :key="index" v-model="currentMenu.days[index]" class="min-w-80 p-2 w-full sm:w-1/2 md:w-1/3 lg:w-1/5"/>
     </div>
     <div v-if="currentMenu">
       <p>Total: {{ moneyFormatter.format(total) }}</p>
     </div>
     <v-btn type="submit" block class="mt-2">Submit</v-btn>
   </v-form>
-  </v-container>
 </template>
 <script>
 export default {
@@ -38,26 +35,6 @@ export default {
   methods: {
     setCurrentMenuID(menuID) {
       this.currentMenuID = menuID;
-    },
-    setQuantity({
-      quantity = 0,
-      menuId = this.currentMenuId,
-      productId = 0,
-      variationId = 0,
-      dayId = 0
-    }) {
-    },
-    formattedPrice(price) {
-      const options = {
-        style: 'currency',
-        currency: 'CAD',
-        currencyDisplay: 'symbol'
-      };
-      const formatter = new Intl.NumberFormat('fr-CA', options);
-      return formatter.format(price);
-    },
-    log() {
-      console.log(arguments);
     },
     updateMenu() {
       const params = new URLSearchParams({
@@ -109,7 +86,6 @@ export default {
               if(this.selectionTypes[type] && day.selectionType != type) return selection;
               if(product.qty > 0)
                 selection.push({
-                  menuID: this.currentMenu.id,
                   dayID: day.dayNumber,
                   productID: product.id,
                   qty: product.qty,
@@ -120,7 +96,6 @@ export default {
                   (selection, variation) => {
                     if(variation.qty > 0){
                       selection.push({
-                        menuID: this.currentMenu.id,
                         dayID: day.dayNumber,
                         productID: product.id,
                         variationID: variation.id,
