@@ -29,6 +29,10 @@ app.config.globalProperties.moneyFormatter = new Intl.NumberFormat(
     currency: 'CAD',
   }
 );
+app.config.globalProperties.selectionTypes = {
+  pret_a_manger: "Prêt à manger",
+  pret_a_cuisiner: "Prêt à cuisiner"
+};
 
 registerPlugins(app)
 
