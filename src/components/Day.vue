@@ -4,9 +4,9 @@
 
 <template>
   <div class="@container flex flex-col">
-    <h3 class="text-center uppercase ">{{ modelValue.date.day }}</h3>
+    <h3 class="text-center uppercase wp-font-primary">{{ modelValue.date.day }}</h3>
     <div v-if="!modelValue.available" class="flex flex-col selection-type justify-center flex-grow">
-      <h3 class="text-center title-unavailable">Non disponible</h3>
+      <h3 class="text-center title-unavailable wp-font-primary">Non disponible</h3>
       <div class="box-unavailable flex-grow"></div>
     </div>
     <div v-if="modelValue.available && modelValue.products.pret_a_manger && modelValue.products.pret_a_cuisiner" class="flex flex-col @[15rem]:flex-row selection-type justify-center">
