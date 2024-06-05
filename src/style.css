@@ -181,3 +181,6 @@
   max-height:100%;
   background-color: var(--color-day-box-unavailable);
 }
+.variation-total::before{
+  content:"| "
+}
