@@ -3,7 +3,7 @@
 */
 <template>
   <div v-if="isDeadLineSoon()" class="flex flex-col items-center mb-5">
-    <h4 class="mt-5 mb-10 wp-font-primary text-lg wp-global-color-orange">Plus que quelques heures avant de passer votre
+    <h4 class="mt-5 mb-10 wp-font-primary text-lg text-center wp-global-color-orange">Plus que quelques heures avant de passer votre
       commande</h4>
     <div class="grid">
       <div class="grid grid-cols-5 gap-2">

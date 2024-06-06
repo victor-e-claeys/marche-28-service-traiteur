@@ -4,9 +4,9 @@
 
 <template>
   <div class="@container flex flex-col">
-    <h3 class="text-center uppercase wp-font-primary">{{ modelValue.date.day }}</h3>
+    <h3 class="text-center uppercase wp-font-primary h-8">{{ modelValue.date.day }}</h3>
     <div v-if="!modelValue.available" class="flex flex-col selection-type justify-center flex-grow">
-      <h3 class="text-center title-unavailable wp-font-primary">Non disponible</h3>
+      <h3 class="text-center title-unavailable wp-font-primary h-8">Non disponible</h3>
       <div class="box-unavailable flex-grow"></div>
     </div>
     <div v-if="modelValue.available && modelValue.products.pret_a_manger && modelValue.products.pret_a_cuisiner" class="flex flex-col @[15rem]:flex-row selection-type justify-center">
@@ -23,7 +23,8 @@
         {{ label }}
       </v-btn>
     </div>
-    <div v-if="modelValue.available">
+    <div v-if="modelValue.available" class="h-[36rem] max-lg:h-[35rem] max-md:h-[37rem] max-sm:h-[40rem]">
+
       <div v-if="modelValue.selectionType != 'pret_a_cuisiner' && modelValue.products.pret_a_manger">
         <Product v-model="modelValue.products.pret_a_manger" />
       </div>
@@ -32,7 +33,7 @@
       </div>
     </div>
     <div v-if="modelValue.products.collation" class="collation">
-      <h3>Collation</h3>
+      <h3 class="text-center uppercase wp-font-primary h-8">Collation</h3>
       <Product v-model="modelValue.products.collation" />
     </div>
   </div>
