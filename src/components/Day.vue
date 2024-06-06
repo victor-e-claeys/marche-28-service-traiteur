@@ -30,7 +30,7 @@
         {{ label }}
       </v-btn>
     </div>
-    <div class="h-[36rem] max-lg:h-[35rem] max-md:h-[37rem] max-sm:h-[40rem]">
+    <div>
       <div v-if="modelValue.selectionType != 'pret_a_cuisiner' && modelValue.products.pret_a_manger">
         <Product v-model="modelValue.products.pret_a_manger" />
       </div>
