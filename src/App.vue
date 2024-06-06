@@ -11,12 +11,11 @@ import WeekSelection from './components/WeekSelection.vue';
     <WeekSelection v-if="menus" :menus="menus" :currentMenuID="currentMenuID" :currentMenu="currentMenu"
       :setCurrentMenuID="setCurrentMenuID" />
     <TimerMenu v-if="currentMenu" v-model="currentMenu" :currentMenu="currentMenu" />
-    <div v-if="currentMenu" class="flex-1 flex justify-center flex-wrap	">
+    <div v-if="currentMenu" class="days grid gap-4 grid-cols-5 grid-rows-3">
       <Day 
         v-for="(day, index) in currentMenu.days" 
         :key="index" 
-        v-model="currentMenu.days[index]" 
-        class="p-2 w-full sm:w-1/2 md:w-1/3 lg:w-1/5"/>
+        v-model="currentMenu.days[index]" />
     </div>
     <div v-if="currentMenu">
       <v-checkbox v-model="currentMenu.conditionsAccepted">

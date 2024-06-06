@@ -204,3 +204,7 @@
   background-color: var(--color-pret-a-bg-inactive);
   color: var(--color-pret-a-text-inactive);
 }
+
+.days{
+  grid-template-rows: min-content;
+}
