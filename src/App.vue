@@ -18,10 +18,10 @@ import WeekSelection from './components/WeekSelection.vue';
         v-model="currentMenu.days[index]" />
     </div>
     <div v-if="currentMenu">
-      <v-checkbox v-model="currentMenu.conditionsAccepted">
+      <v-checkbox v-model="currentMenu.termsAndConditionsAccepted">
         <template v-slot:label>
           <div>
-            J'accepte les <a :href="conditionsURL" target="_blank">conditions d'utilisation</a>
+            J'accepte les <a :href="termsAndConditionsURL" target="_blank">conditions d'utilisation</a>
           </div>
         </template>
       </v-checkbox>
@@ -30,14 +30,14 @@ import WeekSelection from './components/WeekSelection.vue';
           <v-btn  
             @click="!loading ? confirm : null"
             color="primary" 
-            :disabled="!currentMenu.conditionsAccepted || loading"
+            :disabled="!currentMenu.termsAndConditionsAccepted || loading"
             :loading="loading == 'confirm'">
             Confirmer ma sélection
           </v-btn>
           <a 
-            @click="!loading ? skip : null" 
+            @click="!loading && currentMenu.termsAndConditionsAccepted ? skip : null" 
             :class="{
-              'opacity-25': !currentMenu.conditionsAccepted || loading
+              'opacity-25': !currentMenu.termsAndConditionsAccepted || loading
             }">
             Sauter cette semaine
           </a>
@@ -74,7 +74,7 @@ export default {
       portions: {},
       menus: null,
       currentMenuID: null,
-      conditionsURL: '#',
+      termsAndConditionsURL: '#',
       messages: []
     };
   },
@@ -91,7 +91,8 @@ export default {
       });
       return fetch(this.apiURL(`marche28/v1/menu?${params.toString()}`))
         .then(response => response.json())
-        .then(({ menus, portions, users }) => {
+        .then(({ menus, portions, users, termsAndConditionsURL }) => {
+          this.termsAndConditionsURL = termsAndConditionsURL;
           this.menus = menus;
           this.portions = portions;
           this.users = users;
