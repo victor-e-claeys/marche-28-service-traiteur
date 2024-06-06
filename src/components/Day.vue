@@ -9,8 +9,12 @@ import Product from './Product.vue';
                max-lg:origin-center 
                max-lg:-rotate-90
                max-lg:text-3xl
-               max-lg:w-8">{{ modelValue.date.day }}</h3>
-    <div class="grid max-lg:grid-cols-2 gap-x-5">
+               max-lg:w-8
+               max-sm:rotate-0
+               max-sm:w-full">{{ modelValue.date.day }}</h3>
+    <div class="grid gap-x-5 
+               max-lg:grid-cols-2
+               max-sm:grid-cols-1">
       <div v-if="!modelValue.available"
         class="row-start-2 row-end-4 flex flex-col 
                selection-type justify-center flex-grow">
