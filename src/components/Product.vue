@@ -28,7 +28,7 @@
         <div class="product-qty">
           <NumberInput v-model="modelValue.qty" />
         </div>
-        <div class="product-price-data">
+        <div class="product-price-data flex gap-1 wp-font-text text-sm align-middle items-center">
           <span class="product-price">
             {{ moneyFormatter.format(modelValue.price) }}
           </span>
