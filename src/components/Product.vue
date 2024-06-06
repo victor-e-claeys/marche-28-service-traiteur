@@ -19,7 +19,7 @@
           <span class="variation-per">
             par portion
           </span>
-          <span v-if="variation.qty > 0" class="variation-total ">
+          <span v-if="variation.qty > 0" class="variation-total pipe font-semibold">
             {{ moneyFormatter.format(variation.price * variation.qty)}}
           </span>
         </div>
@@ -28,14 +28,14 @@
         <div class="product-qty">
           <NumberInput v-model="modelValue.qty" />
         </div>
-        <div class="product-price-data">
+        <div class="product-price-data flex gap-1 wp-font-text text-sm align-middle items-center">
           <span class="product-price">
             {{ moneyFormatter.format(modelValue.price) }}
           </span>
           <span class="product-per">
             par portion
           </span>
-          <span v-if="modelValue.qty > 0" class="product-total">
+          <span v-if="modelValue.qty > 0" class="product-total pipe font-semibold">
             {{ moneyFormatter.format(modelValue.price * modelValue.qty)}}
           </span>
         </div>

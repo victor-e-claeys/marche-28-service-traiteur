@@ -11,7 +11,7 @@ import WeekSelection from './components/WeekSelection.vue';
     <WeekSelection v-if="menus" :menus="menus" :currentMenuID="currentMenuID" :currentMenu="currentMenu"
       :setCurrentMenuID="setCurrentMenuID" />
     <TimerMenu v-if="currentMenu" v-model="currentMenu" :currentMenu="currentMenu" />
-    <div v-if="currentMenu" class="days grid gap-4 grid-cols-5 grid-rows-3">
+    <div v-if="currentMenu" class="days grid grid-cols-1 md:grid-cols-1 lg:grid-cols-5 grid-rows-3 auto-rows-min gap-4">
       <Day 
         v-for="(day, index) in currentMenu.days" 
         :key="index" 
@@ -20,14 +20,15 @@ import WeekSelection from './components/WeekSelection.vue';
     <div v-if="currentMenu">
       <v-checkbox v-model="currentMenu.termsAndConditionsAccepted">
         <template v-slot:label>
-          <div>
-            J'accepte les <a :href="termsAndConditionsURL" target="_blank">conditions d'utilisation</a>
+          <div class="wp-font-text">
+            J'accepte les <a :href="termsAndConditionsURL" target="_blank" class="underline ">conditions d'utilisation</a>
           </div>
         </template>
       </v-checkbox>
       <div class="flex">
         <div class="actions flex flex-column items-start">
           <v-btn  
+            class="bouton-confirmation wp-font-text"
             @click="!loading ? confirm : null"
             color="primary" 
             :disabled="!currentMenu.termsAndConditionsAccepted || loading"
@@ -36,19 +37,22 @@ import WeekSelection from './components/WeekSelection.vue';
           </v-btn>
           <a 
             @click="!loading && currentMenu.termsAndConditionsAccepted ? skip : null" 
-            :class="{
-              'opacity-25': !currentMenu.termsAndConditionsAccepted || loading
-            }">
+            :class="[
+              !currentMenu.termsAndConditionsAccepted || loading ? 'opacity-25' : null,
+              'wp-font-text',
+              'underline',
+              'mt-3'
+            ]">
             Sauter cette semaine
           </a>
         </div>
-        <div class="errors">
+        <div class="errors error-style wp-font-text">
           <v-banner
-            icon="mdi-alert-circle"
+            icon="mdi-alert-circle-outline"
             text="Ceci est une erreur"
             :stacked="false" />
         </div>
-        <div class="order-total flex-grow text-right">
+        <div class="order-total flex-grow text-right wp-font-text font-bold">
           Total : {{ moneyFormatter.format(total) }}
         </div>
       </div>

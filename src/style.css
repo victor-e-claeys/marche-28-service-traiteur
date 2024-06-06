@@ -51,7 +51,7 @@
   --color-pret-a-bg-active: var(--e-global-color-287e948);
   --color-pret-a-bg-inactive: #E1E1E1;
   --color-pret-a-text-inactive: #aaaaaa;
-
+  --color-app-bouton: var(--e-global-color-287e948);
 }
 
 .wp-font-primary {
@@ -68,7 +68,7 @@
 
 .wp-font-text {
   font-family: var(--e-global-typography-text-font-family);
-  font-weight: var(--e-global-typography-text-font-weight);
+  /*font-weight: var(--e-global-typography-text-font-weight);*/
 }
 
 .wp-font-accent {
@@ -191,7 +191,7 @@
   background-color: var(--color-day-box-unavailable);
 }
 
-.variation-total::before {
+.pipe::before {
   content: "| "
 }
 
@@ -207,4 +207,13 @@
 
 .days{
   grid-template-rows: min-content;
+}
+.bouton-confirmation{
+  background-color: var(--color-app-bouton) !important;
+  color: var(--e-global-color-black) !important;
+  border-radius: 6px !important;
+  color:var(--e-global-color-black) !important;
+}
+.error-color{
+  color:#FF0000;
 }
