@@ -17,11 +17,11 @@ import Product from './Product.vue';
                max-sm:grid-cols-1">
       <div v-if="!modelValue.available"
         class="row-start-2 row-end-4 flex flex-col 
-               selection-type justify-center flex-grow">
+               selection-type justify-center ">
         <v-btn class="title-unavailable wp-font-primary flex-none" :readonly="true" size="small" block>
           Non disponible
         </v-btn>
-        <div class="box-unavailable flex-grow"></div>
+        <div class="box-unavailable"></div>
       </div>
       <div v-if="modelValue.available" class="repas @container flex flex-col">
         <div v-if="modelValue.products.pret_a_manger && modelValue.products.pret_a_cuisiner"
