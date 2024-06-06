@@ -1,6 +1,6 @@
 <template>
   <v-number-input 
-    controlVariant="stacked"
+    controlVariant="split"
     v-model="computedValue" 
     :reverse="false" 
     :label="label" 

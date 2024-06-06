@@ -29,15 +29,16 @@ import WeekSelection from './components/WeekSelection.vue';
       <div class="flex">
         <div class="actions flex flex-column items-start">
           <v-btn  
-            @click="submit"
+            @click="!loading ? confirm : null"
             color="primary" 
-            :disabled="!currentMenu.conditionsAccepted">
+            :disabled="!currentMenu.conditionsAccepted || loading"
+            :loading="loading == 'confirm'">
             Confirmer ma sélection
           </v-btn>
           <a 
-            @click="skip" 
+            @click="!loading ? skip : null" 
             :class="{
-              'opacity-25': !currentMenu.conditionsAccepted
+              'opacity-25': !currentMenu.conditionsAccepted || loading
             }">
             Sauter cette semaine
           </a>
@@ -52,6 +53,14 @@ import WeekSelection from './components/WeekSelection.vue';
           Total : {{ moneyFormatter.format(total) }}
         </div>
       </div>
+      <v-snackbar
+        v-for="({message}, i) in messages"
+        v-model="messages[i].snackbar"
+        multi-line
+        :key="i"
+      >
+        {{ message }}
+      </v-snackbar>
     </div>
   </div>  
 </template>
@@ -60,15 +69,20 @@ export default {
   name: 'App',
   data() {
     return {
+      loading: false,
       users: false,
       currentUserID: 0,
       portions: {},
       menus: null,
       currentMenuID: null,
-      conditionsURL: '#'
+      conditionsURL: '#',
+      messages: []
     };
   },
   methods: {
+    apiURL(action) {
+      return 'https://lemarche28.ca/wp-json/' + action;
+    },
     setCurrentMenuID(menuID) {
       this.currentMenuID = menuID;
     },
@@ -84,8 +98,20 @@ export default {
           this.users = users;
         });
     },
-    async submit(event) {
-      this.loading = true
+    async confirm(event) {
+      const menuID = this.currentMenuID;
+      this.loading = 'confirm';
+
+      this.messages = [
+        {
+          message: `Confirmation de la commande pour le menu ${menuID}...`,
+          snackbar: true
+        },
+      ];
+
+      this.loading = false;
+
+      return;
 
       const results = await fetch(this.apiURL('marche28/v1/menu'), {
         method: "post",
@@ -97,15 +123,34 @@ export default {
         //make sure to serialize your JSON body
         body: JSON.stringify({
           user: this.currentUserID,
+          menu: this.currentMenuID,
           selection: this.selection
+        })
+      })
+
+      this.messages = results.messages || [];
+
+    },
+    async skip(event) {
+      this.loading = 'skip'
+
+      const results = await fetch(this.apiURL('marche28/v1/menu'), {
+        method: "post",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+
+        //make sure to serialize your JSON body
+        body: JSON.stringify({
+          user: this.currentUserID,
+          menu: this.currentMenuID,
+          skip: true
         })
       })
 
       this.loading = false
 
-    },
-    apiURL(action) {
-      return 'https://lemarche28.ca/wp-json/' + action;
     },
   },
   computed: {

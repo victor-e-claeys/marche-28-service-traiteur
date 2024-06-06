@@ -15,7 +15,7 @@
         size="small"
         :key="key"
         :class="{
-          'flex-1': true,
+          '@[15rem]:flex-1': true,
           'selection-type-button': true,
           active: modelValue.selectionType == key
         }"
