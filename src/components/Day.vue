@@ -14,8 +14,8 @@
     </v-btn>
     <div class="box-unavailable flex-grow"></div>
   </div>
-  <div v-if="modelValue.available" class="repas row-start-2">
-    <div v-if="modelValue.products.pret_a_manger && modelValue.products.pret_a_cuisiner" class="flex flex-col @[15rem]:flex-row selection-type justify-center">
+  <div v-if="modelValue.available" class="repas row-start-2 @container flex flex-col">
+    <div v-if="modelValue.products.pret_a_manger && modelValue.products.pret_a_cuisiner" class="selection-type flex flex-col @[15rem]:flex-row justify-center">
       <v-btn 
         v-for="(label, key) in selectionTypes"
         size="small"
@@ -30,14 +30,8 @@
         {{ label }}
       </v-btn>
     </div>
-    <div>
-      <div v-if="modelValue.selectionType != 'pret_a_cuisiner' && modelValue.products.pret_a_manger">
-        <Product v-model="modelValue.products.pret_a_manger" />
-      </div>
-      <div v-if="modelValue.selectionType == 'pret_a_cuisiner' && modelValue.products.pret_a_cuisiner">
-        <Product v-model="modelValue.products.pret_a_cuisiner" />
-      </div>
-    </div>
+    <Product v-if="modelValue.selectionType != 'pret_a_cuisiner' && modelValue.products.pret_a_manger" v-model="modelValue.products.pret_a_manger" />
+    <Product v-if="modelValue.selectionType == 'pret_a_cuisiner' && modelValue.products.pret_a_cuisiner" v-model="modelValue.products.pret_a_cuisiner" />
   </div>
   <div 
     v-if="modelValue.products.collation" 
