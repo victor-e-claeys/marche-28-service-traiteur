@@ -191,7 +191,7 @@
   background-color: var(--color-day-box-unavailable);
 }
 
-.variation-total::before {
+.pipe::before {
   content: "| "
 }
 
