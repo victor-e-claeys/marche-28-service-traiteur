@@ -204,10 +204,22 @@
   background-color: var(--color-pret-a-bg-inactive);
   color: var(--color-pret-a-text-inactive);
 }
-
-.days{
-  grid-template-rows: min-content;
+/*
+@media (max-width: 550px){
+  .days{
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: min-content;
+  }
 }
+
+@media (min-width: 1024px){
+  .days{
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-rows: repeat(3, min-content);
+  }
+}
+*/
+
 .bouton-confirmation{
   background-color: var(--color-app-bouton) !important;
   color: var(--e-global-color-black) !important;

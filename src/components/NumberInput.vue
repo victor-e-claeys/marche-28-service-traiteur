@@ -6,6 +6,10 @@
     :label="label" 
     :hideInput="false" 
     :inset="false"
+    :min="0"
+    variant="outlined"
+    rounded="0"
+    size="small"
   />
 </template>
 

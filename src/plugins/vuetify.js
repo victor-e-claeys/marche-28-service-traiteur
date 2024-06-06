@@ -21,6 +21,7 @@ export default createVuetify({
     VBtn: {
       variant: 'flat',  // Set default variant
       rounded: '0',        // Set default rounded size, options: 'sm', 'md', 'lg', 'xl', true (true is equivalent to 'md')
+      size: "small"
     },
   },
   theme: {
@@ -31,7 +32,7 @@ export default createVuetify({
           primary: '#B6C369',
           secondary: '#EEF7BA',
         },
-      },
+      }
     },
   },
 })

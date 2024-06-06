@@ -4,34 +4,76 @@ import Product from "./Product.vue";
 
 <template>
   <h3
-    class="day-name row-start-1 text-center self-center uppercase wp-font-primary h-8 max-lg:origin-center max-lg:-rotate-90 max-lg:text-3xl max-lg:w-8 max-sm:rotate-0 max-sm:w-full"
+    :class="[
+      'day-name',
+      'text-center',
+      'uppercase',
+      'wp-font-primary',
+      'p-2',
+      'text-white',
+      'bg-black',
+      'lg:row-start-1',
+      'max-lg:text-2xl',
+      'xs:max-lg:col-span-2',
+      'sticky',
+      'top-0',
+      'z-10'
+      //'max-lg:origin-center',
+      //'max-lg:-rotate-90',
+      //'max-lg:w-8',
+      //'max-sm:rotate-0',
+      //'max-sm:w-full'
+    ]"
   >
     {{ modelValue.date.day }}
   </h3>
   <div
     v-if="!modelValue.available"
-    class="row-start-2 row-end-4 flex flex-col selection-type justify-center"
+    :class="[
+      'flex',
+      'flex-col',
+      'selection-type',
+      'justify-center',
+      'min-h-40',
+      'lg:row-start-2',
+      'lg:row-span-2',
+      'xs:max-lg:col-span-2',
+      'max-lg:-my-4',
+    ]"
   >
     <v-btn
       class="title-unavailable wp-font-primary flex-none"
       :readonly="true"
-      size="small"
       block
     >
       Non disponible
     </v-btn>
     <div class="box-unavailable flex-grow"></div>
   </div>
-  <div v-if="modelValue.available" class="repas @container flex flex-col">
+  <div 
+    v-if="modelValue.available" 
+    :class="[
+      'repas',
+      '@container',
+      'flex',
+      'flex-col',
+      'lg:row-start-2'
+    ]"
+  >
     <div
       v-if="
         modelValue.products.pret_a_manger && modelValue.products.pret_a_cuisiner
       "
-      class="selection-type flex flex-col @[16rem]:flex-row justify-center"
+      :class="[
+        'selection-type',
+        'flex',
+        'flex-col',
+        '@[16rem]:flex-row',
+        'justify-center'
+      ]"
     >
       <v-btn
         v-for="(label, key) in selectionTypes"
-        size="small"
         :key="key"
         :readonly="modelValue.selectionType == key"
         :class="{
@@ -62,12 +104,19 @@ import Product from "./Product.vue";
   <div
     v-if="modelValue.products.collation"
     :class="[
+      '@container',
+      'flex',
+      'flex-col',
       'collation',
-      'lg:row-start-3',
-      `col-start-${modelValue.dayNumber + 1}`,
+      'lg:row-start-3'
     ]"
   >
-    <h3 class="text-center uppercase wp-font-primary h-8">Collation</h3>
+    <v-btn
+      class="text-center wp-font-primary"
+      :readonly="true"
+      size="small"
+      block
+    >Collation</v-btn>
     <Product v-model="modelValue.products.collation" />
   </div>
 </template>
