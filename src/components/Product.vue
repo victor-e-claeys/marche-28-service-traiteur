@@ -63,7 +63,7 @@
                 @click="isActive.value = false"
               ></v-btn>
             </v-card-title>
-            <v-card-text v-html="modelValue.desc" />
+            <v-card-text v-html="sanitizeHTML(modelValue.desc)" />
           </v-card>
         </template>
       </v-dialog>

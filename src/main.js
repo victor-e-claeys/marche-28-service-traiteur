@@ -14,6 +14,7 @@ import App from './App.vue'
 import { createApp } from 'vue'
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import DOMPurify from 'dompurify';
 import 'dayjs/locale/fr';
 import './style.css';
 dayjs.extend(relativeTime);
@@ -22,6 +23,7 @@ dayjs.locale('fr');
 const app = createApp(App)
 
 app.config.globalProperties.dayjs = dayjs;
+app.config.globalProperties.sanitizeHTML = DOMPurify.sanitize;
 app.config.globalProperties.moneyFormatter = new Intl.NumberFormat(
   'fr-CA', 
   {
