@@ -54,19 +54,14 @@ import WeekSelection from "./components/WeekSelection.vue";
           </a>
         </div>
         <div class="errors error-style wp-font-text">
-<<<<<<< HEAD
           <v-banner
             v-for="(message, i) in errorMessages"
             :key="i"
             icon="mdi-alert-circle-outline"
             :text="message"
-            class="error-styl text-red-700"
+            class="error-style text-red-700"
             :stacked="false"
           />
-=======
-          <v-banner icon="mdi-alert-circle-outline" text="Ceci est une erreur" class="error-styl text-red-700"
-            :stacked="false" />
->>>>>>> ca8a2d3a3319506051b6c95da06947e97d88a913
         </div>
         <div class="order-total flex-grow text-right wp-font-text font-bold">
           Total : {{ moneyFormatter.format(total) }}
@@ -106,7 +101,7 @@ export default {
     },
     async updateMenu() {
       const params = new URLSearchParams({
-        user: this.user.id,
+        user: this.user?.id,
       });
 
       try {
@@ -119,7 +114,7 @@ export default {
         this.portions = portions;
         this.termsAndConditionsURL = termsAndConditionsURL;
         this.users = users;
-        this.user = user && user.id > 0 ? (this.user || user) : null;
+        this.user = user?.id > 0 ? (this.user || user) : null;
       } catch (error) {
         console.error(error);
         return;
