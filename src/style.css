@@ -203,6 +203,7 @@
   border-radius: 6px !important;
   color: var(--e-global-color-black) !important;
 }
+
 .error-color {
   color: #ff0000;
 }
@@ -210,14 +211,22 @@
 .qty-field .v-field__field {
   align-items: center;
 }
-.error-style *{
-  color:#FF0000;
+
+.error-style * {
+  color: #FF0000;
 }
-.v-input__control .v-number-input__control{
-  cursor:pointer;
+
+.v-input__control .v-number-input__control {
+  cursor: pointer;
 }
-.v-input__control .v-field{
-  border:1px solid grey;
-  margin-right:5px;
-  padding:5px 2px;
+
+.v-input__control .v-field {
+  border: 1px solid grey;
+  margin-right: 5px;
+}
+
+.v-card-text {
+  display: flex;
+  row-gap: 20px;
+  flex-direction: column;
 }
