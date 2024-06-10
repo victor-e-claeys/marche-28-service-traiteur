@@ -22,6 +22,7 @@
         'items-center',
         'justify-around',
         'p-4',
+        'cursor-pointer',
         currentMenuID == menu.id ? 'active' : null,
         menu.selection_made ? 'selection_made' : null,
         menu.skip ? 'skip' : null,

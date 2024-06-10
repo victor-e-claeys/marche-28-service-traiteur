@@ -213,3 +213,11 @@
 .error-style *{
   color:#FF0000;
 }
+.v-input__control .v-number-input__control{
+  cursor:pointer;
+}
+.v-input__control .v-field{
+  border:1px solid grey;
+  margin-right:5px;
+  padding:5px 2px;
+}

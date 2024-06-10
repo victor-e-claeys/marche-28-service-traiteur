@@ -8,81 +8,54 @@ import WeekSelection from "./components/WeekSelection.vue";
 <template>
   <!--User /-->
   <div class="reset selection-menu">
-    <WeekSelection
-      v-if="menus"
-      :menus="menus"
-      :currentMenuID="currentMenuID"
-      :currentMenu="currentMenu"
-      :setCurrentMenuID="setCurrentMenuID"
-    />
-    <TimerMenu
-      v-if="currentMenu"
-      v-model="currentMenu"
-      :currentMenu="currentMenu"
-    />
-    <div
-      v-if="currentMenu"
-      :class="[
-        'days',
-        'grid',
-        'grid-cols-1',
-        'xs:grid-cols-2',
-        'lg:grid-cols-5',
-        'gap-4',
-      ]"
-    >
-      <Day
-        v-for="(day, index) in currentMenu.days"
-        :key="index"
-        v-model="currentMenu.days[index]"
-      />
+    <WeekSelection v-if="menus" :menus="menus" :currentMenuID="currentMenuID" :currentMenu="currentMenu"
+      :setCurrentMenuID="setCurrentMenuID" />
+    <TimerMenu v-if="currentMenu" v-model="currentMenu" :currentMenu="currentMenu" />
+    <div v-if="currentMenu" :class="[
+      'days',
+      'grid',
+      'grid-cols-1',
+      'xs:grid-cols-2',
+      'lg:grid-cols-5',
+      'gap-4',
+    ]">
+      <Day v-for="(day, index) in currentMenu.days" :key="index" v-model="currentMenu.days[index]" />
     </div>
     <div v-if="currentMenu">
       <v-checkbox v-model="currentMenu.termsAndConditionsAccepted">
         <template v-slot:label>
           <div class="wp-font-text">
             J'accepte les
-            <a :href="termsAndConditionsURL" target="_blank" class="underline"
-              >conditions d'utilisation</a
-            >
+            <a :href="termsAndConditionsURL" target="_blank" class="underline">conditions d'utilisation</a>
           </div>
         </template>
       </v-checkbox>
       <div class="flex max-sm:flex-col max-sm:items-center">
         <div class="actions flex flex-column items-start">
-          <v-btn
-            class="bouton-confirmation wp-font-text"
-            @click="confirm"
-            color="primary"
-            size="large"
-            :disabled="!currentMenu.termsAndConditionsAccepted || !!loading"
-            :loading="loading == 'confirm'"
-          >
+          <v-btn :class="[
+            'bouton-confirmation',
+            'wp-font-text',
+            'cursor-pointer',
+          ]" @click="confirm" color="primary" size="large"
+            :disabled="!currentMenu.termsAndConditionsAccepted || !!loading" :loading="loading == 'confirm'">
             Confirmer ma sélection
           </v-btn>
-          <a
-            @click="
-              !loading && currentMenu.termsAndConditionsAccepted ? skip : null
-            "
-            :class="[
+          <a @click="
+            !loading && currentMenu.termsAndConditionsAccepted ? skip : null
+            " :class="[
               !currentMenu.termsAndConditionsAccepted || !!loading
                 ? 'opacity-25'
                 : null,
               'wp-font-text',
               'underline',
               'mt-3',
-            ]"
-          >
+            ]">
             Sauter cette semaine
           </a>
         </div>
         <div class="errors error-style wp-font-text">
-          <v-banner
-            icon="mdi-alert-circle-outline"
-            text="Ceci est une erreur"
-            class="error-styl text-red-700"
-            :stacked="false"
-          />
+          <v-banner icon="mdi-alert-circle-outline" text="Ceci est une erreur" class="error-styl text-red-700"
+            :stacked="false" />
         </div>
         <div class="order-total flex-grow text-right wp-font-text font-bold">
           Total : {{ moneyFormatter.format(total) }}
@@ -114,7 +87,7 @@ export default {
     setCurrentMenuID(menuID) {
       this.currentMenuID = menuID;
     },
-    addSnackBar(message){
+    addSnackBar(message) {
       this.snackbars.push({
         text: message
       });
@@ -124,14 +97,14 @@ export default {
         user: this.currentUserID,
       });
 
-      try{
+      try {
         const response = await fetch(this.apiURL(`marche28/v1/menu?${params.toString()}`));
         const { menus, portions, users, termsAndConditionsURL } = await response.json();
         this.termsAndConditionsURL = termsAndConditionsURL;
         this.menus = menus;
         this.portions = portions;
         this.users = users;
-      }catch(error){
+      } catch (error) {
         console.error(error);
         return;
       }
