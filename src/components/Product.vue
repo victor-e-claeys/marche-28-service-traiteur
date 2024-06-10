@@ -43,9 +43,9 @@
           </span>
         </div>
       </div>
-      <v-dialog max-width="500" attach="#app">
+      <v-dialog max-width="500" attach="#app" class="">
         <template v-slot:activator="{ props: activatorProps }">
-          <v-btn v-bind="activatorProps" class="mt-2 cursor-pointer">
+          <v-btn v-bind="activatorProps" class="mt-2 cursor-pointer wp-global-color-forest-green">
             <template v-slot:prepend>
               <IconFiche />
             </template>
@@ -55,7 +55,7 @@
 
         <template v-slot:default="{ isActive }">
           <v-card>
-            <v-card-title class="flex justify-space-between align-center">
+            <v-card-title class="flex justify-space-between align-top text-balance">
               <h2 class="text-ellipsis overflow-hidden flex-shrink">
                 {{ modelValue.name }}
               </h2>
