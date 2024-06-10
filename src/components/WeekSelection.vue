@@ -115,9 +115,13 @@ export default {
     },
   },
   created() {
-    this.setCurrentMenuID(this.menus[0].id);
-  },
-};
+    // On charge le menu qui n'est pas sélectionné ou skip
+    if (!this.currentMenu) {
+      let menu = this.menus.find(menu => !menu.selection_made && !menu.skip);
+      if (menu) {
+        this.setCurrentMenuID(menu.id);
+      }
+    }
+  }
+}
 </script>
-
-<style scoped></style>

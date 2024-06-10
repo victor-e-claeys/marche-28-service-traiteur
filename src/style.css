@@ -210,3 +210,6 @@
 .qty-field .v-field__field {
   align-items: center;
 }
+.error-style *{
+  color:#FF0000;
+}
