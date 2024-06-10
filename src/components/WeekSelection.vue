@@ -1,24 +1,52 @@
 <template>
-  <div>
-    <h1 v-if="currentMenu" class="text-center wp-font-primary text-2xl">{{ menuTitre() }}</h1>
-    <div class="flex lg:gap-[50px] mt-6 mb-6 justify-center flex-wrap gap-4">
-      <a :class="{
-        square: true,
-        active: currentMenuID == menu.id,
-        selection_made: menu.selection_made,
-        skip: menu.skip
-      }" v-for="menu in menus" :key="menu.id" @click="() => setCurrentMenuID(menu.id)">
-        <h3 class="wp-font-text ">{{ formattedDateToMonth(menu.date_debut.timestamp, menu.date_fin.timestamp) }}</h3>
-        <p class="wp-font-text">{{ formattedDateNumberToNumber(menu.date_debut.timestamp, menu.date_fin.timestamp) }}</p>
-      </a>
-    </div>
+  <h1 v-if="currentMenu" class="text-center wp-font-primary text-2xl">
+    {{ menuTitre() }}
+  </h1>
+  <div
+    :class="[
+      'grid',
+      'grid-rows-1',
+      'grid-flow-col',
+      'auto-cols-auto',
+      'lg:gap-12',
+      'my-6',
+      'justify-center',
+      'gap-4',
+    ]"
+  >
+    <a
+      :class="[
+        'square',
+        'flex',
+        'flex-col',
+        'items-center',
+        'justify-around',
+        'p-4',
+        currentMenuID == menu.id ? 'active' : null,
+        menu.selection_made ? 'selection_made' : null,
+        menu.skip ? 'skip' : null,
+        currentMenuID != menu.id ? 'cursor-pointer' : null,
+      ]"
+      v-for="menu in menus"
+      :key="menu.id"
+      @click="() => setCurrentMenuID(menu.id)"
+    >
+      <span class="wp-font-text">{{
+        formattedDateToMonth(menu.date_debut.timestamp, menu.date_fin.timestamp)
+      }}</span>
+      <span class="wp-font-text">{{
+        formattedDateNumberToNumber(
+          menu.date_debut.timestamp,
+          menu.date_fin.timestamp
+        )
+      }}</span>
+    </a>
   </div>
 </template>
 
 <script>
-import dayjs from 'dayjs';
 export default {
-  name: 'WeekSelection',
+  name: "WeekSelection",
   props: {
     menus: {
       type: Array,
@@ -26,16 +54,16 @@ export default {
     },
     setCurrentMenuID: {
       type: Function,
-      required: true
+      required: true,
     },
     currentMenuID: {
       type: Number,
-      required: false
+      required: false,
     },
     currentMenu: {
       type: Object,
-      required: false
-    }
+      required: false,
+    },
   },
   methods: {
     /**
@@ -44,8 +72,12 @@ export default {
      * @returns {string} Titre du menu
      */
     menuTitre() {
-      let date1 = dayjs.unix(this.currentMenu.date_debut.timestamp).format('D MMMM');
-      let date2 = dayjs.unix(this.currentMenu.date_fin.timestamp).format('D MMMM');
+      let date1 = this.dayjs
+        .unix(this.currentMenu.date_debut.timestamp)
+        .format("D MMMM");
+      let date2 = this.dayjs
+        .unix(this.currentMenu.date_fin.timestamp)
+        .format("D MMMM");
       return `Menu pour le ${date1} au ${date2}`;
     },
     /**
@@ -56,8 +88,8 @@ export default {
      * @returns {string} Date formatée
      */
     formattedDateNumberToNumber(timestamp1, timestamp2) {
-      let date1 = dayjs.unix(timestamp1).format('D');
-      let date2 = dayjs.unix(timestamp2).format('D');
+      let date1 = this.dayjs.unix(timestamp1).format("DD");
+      let date2 = this.dayjs.unix(timestamp2).format("DD");
       return `${date1} - ${date2}`;
     },
     /**
@@ -69,25 +101,23 @@ export default {
      * @returns {string} Date formatée en mois
      */
     formattedDateToMonth(timestamp1, timestamp2) {
-      let month1 = dayjs.unix(timestamp1).format('MMM').toUpperCase().substr(0, 3);
-      let month2 = dayjs.unix(timestamp2).format('MMM').toUpperCase().substr(0, 3);
+      let month1 = this.dayjs
+        .unix(timestamp1)
+        .format("MMM")
+        .toUpperCase()
+        .substr(0, 3);
+      let month2 = this.dayjs
+        .unix(timestamp2)
+        .format("MMM")
+        .toUpperCase()
+        .substr(0, 3);
       return month1 === month2 ? month1 : `${month1} - ${month2}`;
     },
-    /**
-     * Ajoute la classe active si le menu est sélectionné et change le menu sélectionné
-     *
-     */
-    selectMenu(menu) {
-      console.log(menu);
-    }
   },
   created() {
     this.setCurrentMenuID(this.menus[0].id);
-  }
-}
+  },
+};
 </script>
 
-<style scoped>
-
-
-</style>
+<style scoped></style>

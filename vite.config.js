@@ -30,7 +30,6 @@ export default defineConfig({
       },
     }),
     tailwindcss(),
-    vueDevTools(),
   ],
   define: { 'process.env': {} },
   resolve: {

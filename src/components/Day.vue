@@ -10,6 +10,7 @@ import Product from "./Product.vue";
       'uppercase',
       'wp-font-primary',
       'p-2',
+      'm-0',
       'text-white',
       'bg-black',
       'lg:row-start-1',
@@ -42,9 +43,8 @@ import Product from "./Product.vue";
     ]"
   >
     <v-btn
-      class="title-unavailable wp-font-primary flex-none"
+      class="title-unavailable grow-0 wp-font-primary flex-none"
       :readonly="true"
-      block
     >
       Non disponible
     </v-btn>
@@ -57,7 +57,8 @@ import Product from "./Product.vue";
       '@container',
       'flex',
       'flex-col',
-      'lg:row-start-2'
+      'lg:row-start-2',
+      'wp-font-primary'
     ]"
   >
     <div

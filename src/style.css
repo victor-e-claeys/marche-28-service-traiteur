@@ -1,29 +1,29 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /*    Style pour chaque police de Wordpress. */
-#app {
-  --e-global-color-primary: #B7B8A5;
+.selection-menu {
+  --e-global-color-primary: #b7b8a5;
   --e-global-color-secondary: #273043;
-  --e-global-color-text: #7A7A7A;
-  --e-global-color-accent: #E7D89F;
+  --e-global-color-text: #7a7a7a;
+  --e-global-color-accent: #e7d89f;
   --e-global-color-0aa45be: #000000;
   --e-global-color-612e980: #273043;
-  --e-global-color-78fd9a6: #FFFFFF;
-  --e-global-color-0fc9762: #B7B8A5;
-  --e-global-color-7c1812c: #E7D89F;
-  --e-global-color-7b6c9a2: #EDEDE8;
-  --e-global-color-5eaf9c2: #F4F5F8;
-  --e-global-color-45bf206: #C7B9A6;
-  --e-global-color-f54bda1: #F4A469;
-  --e-global-color-fecde5d: #EE8339;
-  --e-global-color-facc16e: #FFFAF7;
+  --e-global-color-78fd9a6: #ffffff;
+  --e-global-color-0fc9762: #b7b8a5;
+  --e-global-color-7c1812c: #e7d89f;
+  --e-global-color-7b6c9a2: #edede8;
+  --e-global-color-5eaf9c2: #f4f5f8;
+  --e-global-color-45bf206: #c7b9a6;
+  --e-global-color-f54bda1: #f4a469;
+  --e-global-color-fecde5d: #ee8339;
+  --e-global-color-facc16e: #fffaf7;
   --e-global-color-c8f7fa8: #748752;
-  --e-global-color-03084f2: #F0F1DB;
-  --e-global-color-287e948: #B6C369;
-  --e-global-color-b335789: #FEFFFE;
+  --e-global-color-03084f2: #f0f1db;
+  --e-global-color-287e948: #b6c369;
+  --e-global-color-b335789: #fefffe;
   --e-global-typography-primary-font-family: "Open Sans";
   --e-global-typography-primary-font-weight: 700;
   --e-global-typography-secondary-font-family: "Open Sans";
@@ -49,7 +49,7 @@
   --color-day-title-unavailable: var(--e-global-color-fecde5d);
   --color-day-box-unavailable: var(--e-global-color-f54bda1);
   --color-pret-a-bg-active: var(--e-global-color-287e948);
-  --color-pret-a-bg-inactive: #E1E1E1;
+  --color-pret-a-bg-inactive: #e1e1e1;
   --color-pret-a-text-inactive: #aaaaaa;
   --color-app-bouton: var(--e-global-color-287e948);
 }
@@ -93,7 +93,6 @@
   font-size: var(--e-global-typography-0e8c1da-font-size);
 }
 
-
 /* Style pour les couleurs de Wordpress*/
 .wp-global-color-primary {
   color: var(--e-global-color-primary);
@@ -127,7 +126,6 @@
   color: var(--e-global-color-0fc9762);
 }
 
-
 .wp-global-color-pale-gold {
   color: var(--e-global-color-7c1812c);
 }
@@ -135,7 +133,6 @@
 .wp-global-a-color-taupe-gray {
   color: var(--e-global-color-45bf206);
 }
-
 
 .wp-global-color-pale-orange {
   color: var(--e-global-color-f54bda1);
@@ -154,15 +151,10 @@
 }
 
 /** Style global pour le reste de l'application 
-    METTRE VOS CHANGEMENT EN-DESSOUS !          */
+      METTRE VOS CHANGEMENT EN-DESSOUS !          */
 
 .square {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  width: 100px;
-  height: 100px;
+  aspect-ratio: 1;
   border: 3px solid var(--color-weekSelection-unselected);
 }
 
@@ -173,7 +165,7 @@
 
 .square.skip {
   border-color: var(--color-weekSelection-skip);
-  background-color: var(--color-weekSelection-skip)
+  background-color: var(--color-weekSelection-skip);
 }
 
 .square.active {
@@ -183,7 +175,7 @@
 .title-unavailable {
   padding: 0.5em;
   background-color: var(--color-day-title-unavailable);
-  color: #F0F1DB
+  color: #f0f1db;
 }
 
 .box-unavailable {
@@ -192,7 +184,7 @@
 }
 
 .pipe::before {
-  content: "| "
+  content: "| ";
 }
 
 .selection-type-button.active {
@@ -204,28 +196,17 @@
   background-color: var(--color-pret-a-bg-inactive);
   color: var(--color-pret-a-text-inactive);
 }
-/*
-@media (max-width: 550px){
-  .days{
-    grid-template-columns: 1fr 1fr;
-    grid-auto-rows: min-content;
-  }
-}
 
-@media (min-width: 1024px){
-  .days{
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    grid-template-rows: repeat(3, min-content);
-  }
-}
-*/
-
-.bouton-confirmation{
+.bouton-confirmation {
   background-color: var(--color-app-bouton) !important;
   color: var(--e-global-color-black) !important;
   border-radius: 6px !important;
-  color:var(--e-global-color-black) !important;
+  color: var(--e-global-color-black) !important;
 }
-.error-color{
-  color:#FF0000;
+.error-color {
+  color: #ff0000;
+}
+
+.qty-field .v-field__field {
+  align-items: center;
 }

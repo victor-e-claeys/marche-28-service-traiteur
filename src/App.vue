@@ -7,7 +7,7 @@ import WeekSelection from "./components/WeekSelection.vue";
 
 <template>
   <!--User /-->
-  <div>
+  <div class="reset selection-menu">
     <WeekSelection
       v-if="menus"
       :menus="menus"
@@ -52,10 +52,10 @@ import WeekSelection from "./components/WeekSelection.vue";
         <div class="actions flex flex-column items-start">
           <v-btn
             class="bouton-confirmation wp-font-text"
-            @click="!loading ? confirm : null"
+            @click="confirm"
             color="primary"
             size="large"
-            :disabled="!currentMenu.termsAndConditionsAccepted || loading"
+            :disabled="!currentMenu.termsAndConditionsAccepted || !!loading"
             :loading="loading == 'confirm'"
           >
             Confirmer ma sélection
@@ -65,7 +65,7 @@ import WeekSelection from "./components/WeekSelection.vue";
               !loading && currentMenu.termsAndConditionsAccepted ? skip : null
             "
             :class="[
-              !currentMenu.termsAndConditionsAccepted || loading
+              !currentMenu.termsAndConditionsAccepted || !!loading
                 ? 'opacity-25'
                 : null,
               'wp-font-text',
@@ -87,14 +87,7 @@ import WeekSelection from "./components/WeekSelection.vue";
           Total : {{ moneyFormatter.format(total) }}
         </div>
       </div>
-      <v-snackbar
-        v-for="({ message }, i) in messages"
-        v-model="messages[i].snackbar"
-        multi-line
-        :key="i"
-      >
-        {{ message }}
-      </v-snackbar>
+      <v-snackbar-queue v-model="snackbars" />
     </div>
   </div>
 </template>
@@ -110,7 +103,7 @@ export default {
       menus: null,
       currentMenuID: null,
       termsAndConditionsURL: "#",
-      messages: [],
+      snackbars: [],
     };
   },
   methods: {
@@ -120,34 +113,41 @@ export default {
     setCurrentMenuID(menuID) {
       this.currentMenuID = menuID;
     },
-    updateMenu() {
+    addSnackBar(message){
+      this.snackbars.push({
+        text: message
+      });
+    },
+    async updateMenu() {
       const params = new URLSearchParams({
         user: this.currentUserID,
       });
-      return fetch(this.apiURL(`marche28/v1/menu?${params.toString()}`))
-        .then((response) => response.json())
-        .then(({ menus, portions, users, termsAndConditionsURL }) => {
-          this.termsAndConditionsURL = termsAndConditionsURL;
-          this.menus = menus;
-          this.portions = portions;
-          this.users = users;
-        });
+
+      try{
+        const response = await fetch(this.apiURL(`marche28/v1/menu?${params.toString()}`));
+        const { menus, portions, users, termsAndConditionsURL } = await response.json();
+        this.termsAndConditionsURL = termsAndConditionsURL;
+        this.menus = menus;
+        this.portions = portions;
+        this.users = users;
+      }catch(error){
+        console.error(error);
+        return;
+      }
+
     },
     async confirm(event) {
       const menuID = this.currentMenuID;
       this.loading = "confirm";
 
-      this.messages = [
-        {
-          message: `Confirmation de la commande pour le menu ${menuID}...`,
-          snackbar: true,
-        },
-      ];
+      await this.delay(3000);
+
+      this.addSnackBar(`Confirmation de la commande pour le menu ${menuID}...`);
 
       this.loading = false;
 
       return;
-
+      /*
       const results = await fetch(this.apiURL("marche28/v1/menu"), {
         method: "post",
         headers: {
@@ -164,6 +164,7 @@ export default {
       });
 
       this.messages = results.messages || [];
+      */
     },
     async skip(event) {
       this.loading = "skip";
@@ -237,6 +238,9 @@ export default {
       },
       deep: true,
     },
+    snackbars: {
+      hander: console.log
+    }
   },
   created() {
     this.updateMenu();

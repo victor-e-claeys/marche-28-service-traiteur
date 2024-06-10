@@ -40,7 +40,7 @@
           </span>
         </div>
       </div>
-      <v-dialog max-width="500">
+      <v-dialog max-width="500" attach="#app">
         <template v-slot:activator="{ props: activatorProps }">
           <v-btn v-bind="activatorProps" class="mt-2">
             <template v-slot:prepend>
