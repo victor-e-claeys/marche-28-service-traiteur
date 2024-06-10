@@ -43,15 +43,15 @@ import Product from "./Product.vue";
     ]"
   >
     <v-btn
-      class="title-unavailable grow-0 wp-font-primary flex-none"
+      class="title-unavailable grow-0 wp-font-primary flex-none cursor-pointer"
       :readonly="true"
     >
       Non disponible
     </v-btn>
     <div class="box-unavailable flex-grow"></div>
   </div>
-  <div 
-    v-if="modelValue.available" 
+  <div
+    v-if="modelValue.available"
     :class="[
       'repas',
       '@container',
@@ -74,6 +74,7 @@ import Product from "./Product.vue";
       ]"
     >
       <v-btn
+      class="cursor-pointer"
         v-for="(label, key) in selectionTypes"
         :key="key"
         :readonly="modelValue.selectionType == key"
@@ -115,10 +116,9 @@ import Product from "./Product.vue";
     ]"
   >
     <v-btn
-      class="text-center wp-font-primary"
+      class="text-center wp-font-primary cursor-pointer"
       :readonly="true"
       size="small"
-      block
     >Collation</v-btn>
     <Product 
       v-model="modelValue.products.collation" 
