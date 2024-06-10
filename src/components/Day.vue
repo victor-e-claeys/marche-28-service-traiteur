@@ -92,6 +92,7 @@ import Product from "./Product.vue";
         modelValue.selectionType != 'pret_a_cuisiner' &&
         modelValue.products.pret_a_manger
       "
+      type="pret_a_manger"
       v-model="modelValue.products.pret_a_manger"
     />
     <Product
@@ -99,6 +100,7 @@ import Product from "./Product.vue";
         modelValue.selectionType == 'pret_a_cuisiner' &&
         modelValue.products.pret_a_cuisiner
       "
+      type="pret_a_cuisiner"
       v-model="modelValue.products.pret_a_cuisiner"
     />
   </div>
@@ -118,7 +120,10 @@ import Product from "./Product.vue";
       size="small"
       block
     >Collation</v-btn>
-    <Product v-model="modelValue.products.collation" />
+    <Product 
+      v-model="modelValue.products.collation" 
+      type="collation"
+    />
   </div>
 </template>
 

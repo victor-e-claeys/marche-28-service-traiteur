@@ -78,8 +78,10 @@ import WeekSelection from "./components/WeekSelection.vue";
         </div>
         <div class="errors error-style wp-font-text">
           <v-banner
+            v-for="(message, i) in errorMessages"
+            :key="i"
             icon="mdi-alert-circle-outline"
-            text="Ceci est une erreur"
+            :text="message"
             class="error-styl text-red-700"
             :stacked="false"
           />
@@ -99,12 +101,13 @@ export default {
     return {
       loading: false,
       users: false,
-      currentUserID: 0,
+      user: null,
       portions: {},
       menus: null,
       currentMenuID: null,
       termsAndConditionsURL: "#",
       snackbars: [],
+      minimumMealQty: 4,
     };
   },
   methods: {
@@ -114,28 +117,31 @@ export default {
     setCurrentMenuID(menuID) {
       this.currentMenuID = menuID;
     },
-    addSnackBar(message){
+    addSnackBar(message) {
       this.snackbars.push({
-        text: message
+        text: message,
       });
     },
     async updateMenu() {
       const params = new URLSearchParams({
-        user: this.currentUserID,
+        user: this.user.id,
       });
 
-      try{
-        const response = await fetch(this.apiURL(`marche28/v1/menu?${params.toString()}`));
-        const { menus, portions, users, termsAndConditionsURL } = await response.json();
-        this.termsAndConditionsURL = termsAndConditionsURL;
+      try {
+        const response = await fetch(
+          this.apiURL(`marche28/v1/menu?${params.toString()}`)
+        );
+        const { menus, portions, termsAndConditionsURL, user, users } =
+          await response.json();
         this.menus = menus;
         this.portions = portions;
+        this.termsAndConditionsURL = termsAndConditionsURL;
         this.users = users;
-      }catch(error){
+        this.user = user && user.id > 0 ? (this.user || user) : null;
+      } catch (error) {
         console.error(error);
         return;
       }
-
     },
     async confirm(event) {
       const menuID = this.currentMenuID;
@@ -146,6 +152,8 @@ export default {
       this.addSnackBar(`Confirmation de la commande pour le menu ${menuID}...`);
 
       this.loading = false;
+
+      if (!user) this.addSnackBar;
 
       return;
       /*
@@ -179,7 +187,7 @@ export default {
 
         //make sure to serialize your JSON body
         body: JSON.stringify({
-          user: this.currentUserID,
+          user: this.user.id,
           menu: this.currentMenuID,
           skip: true,
         }),
@@ -192,37 +200,72 @@ export default {
     currentMenu() {
       return this.menus?.find((menu) => menu.id === this.currentMenuID);
     },
+    errorMessages() {
+      return [
+        !this.user
+          ? "Vous devez être connecté pour faire une sélection"
+          : null,
+        !this.selectionHasMinimum
+          ? `Votre sélection doit contenir un minimum de ${this.minimumMealQty} portions enfants/prêt-à-cuisiner par jour sur 4 jours.`
+          : null,
+      ].filter((v) => v);
+    },
+    selectionHasMinimum() {
+      return this.selection.reduce((hasMinimum, { type, attributes, qty }) => {
+        if (!this.selectionTypes[type]) return hasMinimum;
+        if (attributes) {
+          if (attributes.pa_portions == "enfant")
+            return qty >= this.minimumMealQty && hasMinimum;
+        } else {
+          return qty >= this.minimumMealQty && hasMinimum;
+        }
+        return hasMinimum;
+      }, true);
+    },
     selection() {
-      return this.currentMenu.days.reduce((selection, day) => {
-        if (!day.available) return selection;
-        Object.entries(day.products).reduce((selection, [type, product]) => {
-          if (!product) return selection;
-          if (this.selectionTypes[type] && day.selectionType != type)
-            return selection;
-          if (product.qty > 0)
-            selection.push({
-              dayID: day.dayNumber,
-              productID: product.id,
-              qty: product.qty,
-              price: product.price,
-            });
-          if (product.variations)
-            Object.values(product.variations).reduce((selection, variation) => {
-              if (variation.qty > 0) {
+      return this.currentMenu?.days.reduce(
+        (selection, { dayNumber, available, products, selectionType }) => {
+          if (!available) return selection;
+          Object.entries(products).reduce(
+            (selection, [type, { id, qty, price, variations }]) => {
+              if (!id) return selection;
+              if (this.selectionTypes[type] && selectionType != type)
+                return selection;
+              const productID = id;
+              if (variations) {
+                Object.values(variations).reduce(
+                  (selection, { attributes, id, qty, price }) => {
+                    const variationID = id;
+                    selection.push({
+                      dayNumber,
+                      type,
+                      productID,
+                      qty,
+                      price,
+                      variationID,
+                      attributes,
+                    });
+                    return selection;
+                  },
+                  selection
+                );
+              }else{
                 selection.push({
-                  dayID: day.dayNumber,
-                  productID: product.id,
-                  variationID: variation.id,
-                  qty: variation.qty,
-                  price: variation.price,
+                  dayNumber,
+                  type,
+                  productID,
+                  qty,
+                  price,
                 });
               }
               return selection;
-            }, selection);
+            },
+            selection
+          );
           return selection;
-        }, selection);
-        return selection;
-      }, []);
+        },
+        []
+      );
     },
     total() {
       return this.selection.reduce(
@@ -239,9 +282,9 @@ export default {
       },
       deep: true,
     },
-    snackbars: {
-      hander: console.log
-    }
+    selection: {
+      handler: console.log,
+    },
   },
   created() {
     this.updateMenu();
