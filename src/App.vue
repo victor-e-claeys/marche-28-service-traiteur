@@ -37,13 +37,13 @@ import WeekSelection from "./components/WeekSelection.vue";
             'wp-font-text',
             'cursor-pointer',
           ]" @click="confirm" color="primary" size="large"
-            :disabled="!currentMenu.termsAndConditionsAccepted || !!loading" :loading="loading == 'confirm'">
+            :disabled="!canSubmit" :loading="loading == 'confirm'">
             Confirmer ma sélection
           </v-btn>
           <a @click="
             !loading && currentMenu.termsAndConditionsAccepted ? skip : null
             " :class="[
-              !currentMenu.termsAndConditionsAccepted || !!loading
+                !canSubmit
                 ? 'opacity-25'
                 : null,
               'wp-font-text',
@@ -94,14 +94,15 @@ export default {
     setCurrentMenuID(menuID) {
       this.currentMenuID = menuID;
     },
-    addSnackBar(message) {
+    addSnackBar({text}) {
       this.snackbars.push({
-        text: message,
+        color,
+        text,
       });
     },
     async updateMenu() {
       const params = new URLSearchParams({
-        user: this.user?.id,
+        user: this.user?.id || '',
       });
 
       try {
@@ -124,17 +125,7 @@ export default {
       const menuID = this.currentMenuID;
       this.loading = "confirm";
 
-      await this.delay(3000);
-
-      this.addSnackBar(`Confirmation de la commande pour le menu ${menuID}...`);
-
-      this.loading = false;
-
-      if (!user) this.addSnackBar;
-
-      return;
-      /*
-      const results = await fetch(this.apiURL("marche28/v1/menu"), {
+      const {messages, errors} = await fetch(this.apiURL("marche28/v1/menu"), {
         method: "post",
         headers: {
           Accept: "application/json",
@@ -143,14 +134,33 @@ export default {
 
         //make sure to serialize your JSON body
         body: JSON.stringify({
-          user: this.currentUserID,
+          user: this.user?.id,
           menu: this.currentMenuID,
           selection: this.selection,
         }),
       });
 
+      errors?.map(text => {
+        this.snackbars.push({
+          color: 'red-accent-4',
+          closeOnBack: false,
+          closeOnContentClick: true,
+          timeout: -1,
+          text
+        });
+      });
+
+      messages?.map(text => {
+        this.snackbars.push({
+          color: 'green-darken-4',
+          text
+        });
+      });
+
+      this.loading = false;
+
       this.messages = results.messages || [];
-      */
+      
     },
     async skip(event) {
       this.loading = "skip";
@@ -174,6 +184,9 @@ export default {
     },
   },
   computed: {
+    canSubmit(){
+      return this.currentMenu?.termsAndConditionsAccepted && !this.loading && this.errorMessages.length === 0
+    },
     currentMenu() {
       return this.menus?.find((menu) => menu.id === this.currentMenuID);
     },
@@ -184,6 +197,9 @@ export default {
           : null,
         !this.selectionHasMinimum
           ? `Votre sélection doit contenir un minimum de ${this.minimumMealQty} portions enfants/prêt-à-cuisiner par jour sur 4 jours.`
+          : null,
+        !this.currentMenu?.editable
+          ? "La date limite de sélection pour ce menu est passée"
           : null,
       ].filter((v) => v);
     },
@@ -204,8 +220,9 @@ export default {
         (selection, { dayNumber, available, products, selectionType }) => {
           if (!available) return selection;
           Object.entries(products).reduce(
-            (selection, [type, { id, qty, price, variations }]) => {
-              if (!id) return selection;
+            (selection, [type, product]) => {
+              if (!product) return selection;
+              const { id, qty, price, variations } = product;
               if (this.selectionTypes[type] && selectionType != type)
                 return selection;
               const productID = id;
@@ -255,12 +272,9 @@ export default {
     currentMenu: {
       handler(menu) {
         if (!menu.isModified) menu.isModified = true;
-        console.log(menu, this.selection);
+        if(this.user?.roles.includes('admin')) console.log(menu, this.selection);
       },
       deep: true,
-    },
-    selection: {
-      handler: console.log,
     },
   },
   created() {

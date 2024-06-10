@@ -14,12 +14,30 @@ import App from './App.vue'
 import { createApp } from 'vue'
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import updateLocale from 'dayjs/plugin/updateLocale';
 import DOMPurify from 'dompurify';
 import 'dayjs/locale/fr';
 //import './reset.css';
 import './style.css';
 dayjs.extend(relativeTime);
+dayjs.extend(updateLocale);
 dayjs.locale('fr');
+dayjs.updateLocale('fr', {
+  monthsShort: [
+    "JAN", // janvier
+    "FEV", // février
+    "MAR", // mars
+    "AVR", // avril
+    "MAI", // mai
+    "JUN", // juin
+    "JUL", // juillet
+    "AOU", // août
+    "SEP", // septembre
+    "OCT", // octobre
+    "NOV", // novembre
+    "DEC"  // décembre
+  ]
+})
 
 const app = createApp(App)
 
@@ -27,6 +45,9 @@ app.config.globalProperties = Object.assign(
   {
     dayjs,
     delay: ms => new Promise(res => setTimeout(res, ms)),
+    isMenuEditable: menu => {
+      
+    },
     moneyFormatter: new Intl.NumberFormat(
       'fr-CA', 
       {

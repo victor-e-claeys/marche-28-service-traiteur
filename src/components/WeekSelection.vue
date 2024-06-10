@@ -27,6 +27,7 @@
         menu.selection_made ? 'selection_made' : null,
         menu.skip ? 'skip' : null,
         currentMenuID != menu.id ? 'cursor-pointer' : null,
+        !menu.editable ? 'opacity-25' : null
       ]"
       v-for="menu in menus"
       :key="menu.id"
@@ -104,21 +105,17 @@ export default {
     formattedDateToMonth(timestamp1, timestamp2) {
       let month1 = this.dayjs
         .unix(timestamp1)
-        .format("MMM")
-        .toUpperCase()
-        .substr(0, 3);
+        .format("MMM");
       let month2 = this.dayjs
         .unix(timestamp2)
-        .format("MMM")
-        .toUpperCase()
-        .substr(0, 3);
+        .format("MMM");
       return month1 === month2 ? month1 : `${month1} - ${month2}`;
     },
   },
   created() {
     // On charge le menu qui n'est pas sélectionné ou skip
     if (!this.currentMenu) {
-      let menu = this.menus.find(menu => !menu.selection_made && !menu.skip);
+      let menu = this.menus.find(menu => !menu.selection_made && !menu.skip && menu.editable);
       if (menu) {
         this.setCurrentMenuID(menu.id);
       }
