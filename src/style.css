@@ -226,6 +226,6 @@
   border-radius: 6px !important;
   color:var(--e-global-color-black) !important;
 }
-.error-color{
+.error-style *{
   color:#FF0000;
 }

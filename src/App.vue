@@ -48,7 +48,7 @@ import WeekSelection from "./components/WeekSelection.vue";
           </div>
         </template>
       </v-checkbox>
-      <div class="flex">
+      <div class="flex max-sm:flex-col max-sm:items-center">
         <div class="actions flex flex-column items-start">
           <v-btn
             class="bouton-confirmation wp-font-text"
@@ -80,6 +80,7 @@ import WeekSelection from "./components/WeekSelection.vue";
           <v-banner
             icon="mdi-alert-circle-outline"
             text="Ceci est une erreur"
+            class="error-styl text-red-700"
             :stacked="false"
           />
         </div>
@@ -143,7 +144,7 @@ export default {
           snackbar: true,
         },
       ];
-
+icon="mdi-alert-circle-outline"
       this.loading = false;
 
       return;
