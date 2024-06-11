@@ -2,37 +2,30 @@
   <h1 v-if="currentMenu" class="text-center wp-font-primary text-2xl">
     {{ menuTitre() }}
   </h1>
-  <div
-    :class="[
-      'grid',
-      'grid-rows-1',
-      'grid-flow-col',
-      'auto-cols-auto',
-      'lg:gap-12',
-      'my-6',
-      'justify-center',
-      'gap-4',
-    ]"
-  >
-    <a
-      :class="[
-        'square',
-        'flex',
-        'flex-col',
-        'items-center',
-        'justify-around',
-        'p-4',
-        'cursor-pointer',
-        currentMenuID == menu.id ? 'active' : null,
-        menu.selection_made && currentMenuID != menu.id ? 'selection_made' : null,
-        menu.skip && currentMenuID != menu.id ? 'skip' : null,
-        currentMenuID != menu.id ? 'cursor-pointer' : null,
-        !menu.editable ? 'opacity-25' : null
-      ]"
-      v-for="menu in menus"
-      :key="menu.id"
-      @click="() => setCurrentMenuID(menu.id)"
-    >
+  <div :class="[
+    'grid',
+    'grid-rows-1',
+    'grid-flow-col',
+    'auto-cols-auto',
+    'lg:gap-12',
+    'my-6',
+    'justify-center',
+    'gap-4',
+  ]">
+    <a :class="[
+      'square',
+      'flex',
+      'flex-col',
+      'items-center',
+      'justify-around',
+      'p-4',
+      'cursor-pointer',
+      currentMenuID == menu.id ? 'active' : null,
+      menu.selection_made && currentMenuID != menu.id ? 'selection_made' : null,
+      menu.skip && currentMenuID != menu.id ? 'skip' : null,
+      currentMenuID != menu.id ? 'cursor-pointer' : null,
+      !menu.editable ? 'opacity-25' : null
+    ]" v-for="menu in menus" :key="menu.id" @click="() => setCurrentMenuID(menu.id)">
       <span class="wp-font-text">{{
         formattedDateToMonth(menu.date_debut.timestamp, menu.date_fin.timestamp)
       }}</span>
@@ -90,10 +83,13 @@ export default {
      * @returns {string} Date formatée
      */
     formattedDateNumberToNumber(timestamp1, timestamp2) {
-      let date1 = this.dayjs.unix(timestamp1).format("DD");
-      let date2 = this.dayjs.unix(timestamp2).format("DD");
+      this.dayjs.extend(this.utc);
+      let date1 = this.dayjs.unix(timestamp1).utc().format("DD");
+      let date2 = this.dayjs.unix(timestamp2).utc().format("DD");
       return `${date1} - ${date2}`;
     },
+
+
     /**
      * Formatte 2 timestamp en date du mois avec 3 lettres majuscules, si les mois sont les mêmes,
      * on affiche un seul mois, sinon on affiche les 2 mois dans le format "MMM - MMM"
