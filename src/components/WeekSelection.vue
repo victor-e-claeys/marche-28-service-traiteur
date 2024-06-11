@@ -83,7 +83,6 @@ export default {
      * @returns {string} Date formatée
      */
     formattedDateNumberToNumber(timestamp1, timestamp2) {
-      this.dayjs.extend(this.utc);
       let date1 = this.dayjs.unix(timestamp1).utc().format("DD");
       let date2 = this.dayjs.unix(timestamp2).utc().format("DD");
       return `${date1} - ${date2}`;

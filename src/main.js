@@ -24,6 +24,7 @@ import './style.css';
 dayjs.extend(relativeTime);
 dayjs.extend(updateLocale);
 dayjs.locale('fr');
+dayjs.extend(utc);
 dayjs.updateLocale('fr', {
   monthsShort: [
     "JAN", // janvier
@@ -45,7 +46,7 @@ const app = createApp(App)
 
 app.config.globalProperties = Object.assign(
   {
-    dayjs,utc,
+    dayjs,
     delay: ms => new Promise(res => setTimeout(res, ms)),
     menuEditable: function(){
       let editable;
