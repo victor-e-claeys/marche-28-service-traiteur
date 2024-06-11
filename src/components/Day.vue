@@ -62,9 +62,6 @@ import Product from "./Product.vue";
     ]"
   >
     <div
-      v-if="
-        modelValue.products.pret_a_manger && modelValue.products.pret_a_cuisiner
-      "
       :class="[
         'selection-type',
         'flex',
@@ -73,20 +70,23 @@ import Product from "./Product.vue";
         'justify-center'
       ]"
     >
-      <v-btn
-      class="cursor-pointer"
-        v-for="(label, key) in selectionTypes"
-        :key="key"
-        :readonly="modelValue.selectionType == key"
-        :class="{
-          '@[16rem]:flex-1': true,
-          'selection-type-button': true,
-          active: modelValue.selectionType == key,
-        }"
-        @click="() => setSelectionType(key)"
-      >
-        {{ label }}
-      </v-btn>
+      <template
+          v-for="(label, key) in selectionTypes">
+        <v-btn
+          v-if="modelValue.products[key]"
+          class="cursor-pointer"
+          :key="key"
+          :readonly="modelValue.selectionType == key"
+          :class="{
+            '@[16rem]:flex-1': true,
+            'selection-type-button': true,
+            active: modelValue.selectionType == key,
+          }"
+          @click="() => setSelectionType(key)"
+        >
+          {{ label }}
+        </v-btn>
+      </template>
     </div>
     <Product
       v-if="

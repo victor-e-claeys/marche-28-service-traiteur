@@ -24,8 +24,8 @@
         'p-4',
         'cursor-pointer',
         currentMenuID == menu.id ? 'active' : null,
-        menu.selection_made ? 'selection_made' : null,
-        menu.skip ? 'skip' : null,
+        menu.selection_made && currentMenuID != menu.id ? 'selection_made' : null,
+        menu.skip && currentMenuID != menu.id ? 'skip' : null,
         currentMenuID != menu.id ? 'cursor-pointer' : null,
         !menu.editable ? 'opacity-25' : null
       ]"

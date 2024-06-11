@@ -45,9 +45,13 @@ app.config.globalProperties = Object.assign(
   {
     dayjs,
     delay: ms => new Promise(res => setTimeout(res, ms)),
-    isMenuEditable: menu => {
-      
-    },
+    menuEditable: function(){
+      let editable;
+      return {
+        get: () => editable,
+        set: (value) => editable = value
+      };
+    }(),
     moneyFormatter: new Intl.NumberFormat(
       'fr-CA', 
       {
@@ -71,4 +75,4 @@ app.config.globalProperties = Object.assign(
 
 registerPlugins(app)
 
-app.mount('#app')
+app.mount('#app');
