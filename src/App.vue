@@ -121,13 +121,13 @@ export default {
     addSnackBar(snackbar) {
       this.snackbars.push(snackbar);
     },
-    addSuccessSnackBar(text){
+    addSuccessSnackBar(text, cls) {
       this.addSnackBar({
-        color: "green-darken-4",
+        class: cls,
         text,
       });
     },
-    addErrorSnackBar(text){
+    addErrorSnackBar(text) {
       this.addSnackBar({
         color: "red-accent-4",
         closeOnBack: false,
@@ -160,50 +160,75 @@ export default {
     async confirm() {
       this.loading = "confirm";
 
-      const { messages, errors } = await fetch(this.apiURL("marche28/v1/menu"), {
-        method: "post",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
+      try {
+        const { messages, errors } = await fetch(
+          this.apiURL("marche28/v1/menu"),
+          {
+            method: "post",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
 
-        //make sure to serialize your JSON body
-        body: JSON.stringify({
-          skip: false,
-          user: this.user?.id,
-          menu: this.currentMenuID,
-          selection: this.selection,
-        }),
-      }).then(response => response.json());
+            //make sure to serialize your JSON body
+            body: JSON.stringify({
+              skip: false,
+              user: this.user?.id,
+              menu: this.currentMenuID,
+              selection: this.selection,
+            }),
+          }
+        ).then((response) => response.json());
 
-      errors?.map(this.addErrorSnackBar);
-      messages?.map(this.addSuccessSnackBar);
+        errors?.map(this.addErrorSnackBar);
+        messages &&
+          Object.entries(messages).map(([cls, text]) =>
+            this.addSuccessSnackBar(text, cls)
+          );
 
-      if(errors.length === 0) this.currentMenu
+        if (errors.length === 0) {
+          this.currentMenu.skip = false;
+          this.currentMenu.isModified = false;
+        }
+      } catch {
+        this.addErrorSnackBar("Erreur de communication avec le serveur.");
+      }
 
       this.loading = false;
     },
     async skip() {
       this.loading = "skip";
 
-      const { messages, errors } = await fetch(this.apiURL("marche28/v1/menu"), {
-        method: "post",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
+      try {
+        const { messages, errors } = await fetch(
+          this.apiURL("marche28/v1/menu"),
+          {
+            method: "post",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
 
-        //make sure to serialize your JSON body
-        body: JSON.stringify({
-          skip: true,
-          user: this.user?.id,
-          menu: this.currentMenuID,
-          selection: this.selection,
-        }),
-      }).then(response => response.json());
+            //make sure to serialize your JSON body
+            body: JSON.stringify({
+              skip: true,
+              user: this.user?.id,
+              menu: this.currentMenuID,
+              selection: this.selection,
+            }),
+          }
+        ).then((response) => response.json());
 
-      errors?.map(this.addErrorSnackBar);
-      messages?.map(this.addSuccessSnackBar);
+        errors?.map(this.addErrorSnackBar);
+        messages &&
+          Object.entries(messages).map(([cls, text]) =>
+            this.addSuccessSnackBar(text, cls)
+          );
+
+        if (errors.length === 0) this.currentMenu.skip = true;
+      } catch {
+        this.addErrorSnackBar("Erreur de communication avec le serveur.");
+      }
 
       this.loading = false;
     },
@@ -290,16 +315,6 @@ export default {
         (total, item) => total + item.price * item.qty,
         0
       );
-    },
-  },
-  watch: {
-    currentMenu: {
-      handler(menu, oldValue) {
-        if (!menu.isModified) menu.isModified = true;
-        if (window.location.host === 'localhost' || this.user?.roles.includes("administrator"))
-          console.log(menu, oldValue, this.selection);
-      },
-      deep: true,
     },
   },
   created() {
