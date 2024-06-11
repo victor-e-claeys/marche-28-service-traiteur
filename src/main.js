@@ -16,12 +16,15 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import updateLocale from 'dayjs/plugin/updateLocale';
 import DOMPurify from 'dompurify';
+import utc from 'dayjs/plugin/utc';
+
 import 'dayjs/locale/fr';
 //import './reset.css';
 import './style.css';
 dayjs.extend(relativeTime);
 dayjs.extend(updateLocale);
 dayjs.locale('fr');
+dayjs.extend(utc);
 dayjs.updateLocale('fr', {
   monthsShort: [
     "JAN", // janvier
@@ -53,7 +56,7 @@ app.config.globalProperties = Object.assign(
       };
     }(),
     moneyFormatter: new Intl.NumberFormat(
-      'fr-CA', 
+      'fr-CA',
       {
         style: 'currency',
         currency: 'CAD',
@@ -69,7 +72,7 @@ app.config.globalProperties = Object.assign(
       const id = sec.toString(16).replace(/\./g, "").padEnd(14, "0");
       return `${prefix}${id}${random ? `.${Math.trunc(Math.random() * 100000000)}`:""}`;
     }
-  }, 
+  },
   app.config.globalProperties
 );
 
