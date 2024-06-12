@@ -22,10 +22,10 @@
         'p-4',
         'cursor-pointer',
         currentMenu?.id == menu.id ? 'active' : null,
-        menu.selection_made && currentMenu?.id != menu.id ? 'selection_made' : null,
-        menu.skip && currentMenu?.id != menu.id ? 'skip' : null,
+        menu.selection_made ? 'selection_made' : null,
+        menu.skip ? 'skip' : null,
         currentMenu?.id != menu.id ? 'cursor-pointer' : null,
-        !menu.editable ? 'opacity-25' : null
+        !menu.editable ? 'opacity-50' : null,
       ]" v-for="menu in menus" :key="menu.id" @click="() => setCurrentMenuID(menu.id)">
         <span class="wp-font-text">{{
           formattedDateToMonth(menu.date_debut.timestamp, menu.date_fin.timestamp)

@@ -18,8 +18,6 @@ import { computed } from "vue";
     <TimerMenu
       v-if="currentMenu"
       v-model="currentMenu"
-      :currentMenu="currentMenu"
-      :onUpdate="(timeLeft) => this.timeLeft = timeLeft"
     />
     <div
       v-if="currentMenu"
@@ -39,7 +37,7 @@ import { computed } from "vue";
       />
     </div>
     <div v-if="currentMenu">
-      <v-checkbox v-model="currentMenu.termsAndConditionsAccepted">
+      <v-checkbox v-if="currentMenu.editable" v-model="currentMenu.termsAndConditionsAccepted">
         <template v-slot:label>
           <div class="wp-font-text">
             J'accepte les
@@ -50,7 +48,7 @@ import { computed } from "vue";
         </template>
       </v-checkbox>
       <div class="flex max-sm:flex-col max-sm:items-center">
-        <div class="actions flex flex-column items-start">
+        <div v-if="currentMenu.editable" class="actions flex flex-column items-start">
           <v-btn
             :class="['bouton-confirmation', 'wp-font-text', 'cursor-pointer']"
             @click="confirm"
@@ -78,11 +76,17 @@ import { computed } from "vue";
         </div>
         <div class="errors error-style wp-font-text">
           <v-banner
-            v-for="(message, i) in errorMessages"
-            :key="i"
+            v-for="([key, message], i) in errorMessages"
+            :key="key"
             icon="mdi-alert-circle-outline"
             :text="message"
-            class="error-style text-red-700"
+            :class="[
+              key,
+              'error-style',
+              'text-red-700',
+              'py-0',
+              'border-none'
+            ]"
             :stacked="false"
           />
         </div>
@@ -99,7 +103,6 @@ export default {
   name: "App",
   data() {
     return {
-      timeLeft: null,
       loading: false,
       users: false,
       user: null,
@@ -117,7 +120,6 @@ export default {
     },
     setCurrentMenuID(menuID) {
       this.currentMenuID = menuID;
-      this.timeLeft = 0;
     },
     addSnackBar(snackbar) {
       this.snackbars.push(snackbar);
@@ -140,6 +142,7 @@ export default {
     async updateMenu() {
       const params = new URLSearchParams({
         user: this.user?.id || "",
+        upcoming: true
       });
 
       try {
@@ -198,7 +201,8 @@ export default {
       this.loading = false;
     },
     async skip() {
-      if(this.loading || !this.currentMenu.termsAndConditionsAccepted) return console.log("Skip conditions failed.");
+      if (this.loading || !this.currentMenu.termsAndConditionsAccepted)
+        return console.log("Skip conditions failed.");
 
       this.loading = "skip";
 
@@ -239,25 +243,33 @@ export default {
   computed: {
     canSubmit() {
       return (
-        this.currentMenu?.termsAndConditionsAccepted &&
         !this.loading &&
-        this.errorMessages.length === 0 &&
-        this.currentMenu.isModified
+        this.errorMessages.length === 0
       );
     },
     currentMenu() {
       return this.menus?.find((menu) => menu.id === this.currentMenuID);
     },
-    errorMessages() {
-      return [
-        !this.user ? "Vous devez être connecté pour faire une sélection" : null,
-        !this.selectionHasMinimum
+    errors() {
+      return {
+        notLoggedIn: !this.user
+          ? "Vous devez être connecté pour faire une sélection"
+          : null,
+        insufficientSelection: !this.selectionHasMinimum
           ? `Votre sélection doit contenir un minimum de ${this.minimumMealQty} portions enfants/prêt-à-cuisiner par jour sur 4 jours.`
           : null,
-        !this.currentMenu?.editable
-          ? "La date limite de sélection pour ce menu est passée"
+        notEditable: this.currentMenu?.editable 
+          ? null
+          : "La date limite de sélection pour ce menu est passée",
+        notAccepted: !this.currentMenu?.termsAndConditionsAccepted
+          ? "Vous devez accepter les termes et conditions"
           : null,
-      ].filter((v) => v);
+      };
+    },
+    errorMessages() {
+      return Object.entries(this.errors).filter(
+        ([key, message]) => message !== null
+      );
     },
     selectionHasMinimum() {
       return (
@@ -320,9 +332,9 @@ export default {
       );
     },
   },
-  provide(){
+  provide() {
     return {
-      currentMenuEditable: computed(() => this.timeLeft > 0)
+      currentMenu: computed(() => this.currentMenu)
     }
   },
   created() {

@@ -42,8 +42,7 @@ dayjs.updateLocale('fr', {
     "NOV", // novembre
     "DEC"  // décembre
   ]
-})
-
+});
 const app = createApp(App)
 
 app.config.globalProperties = Object.assign(

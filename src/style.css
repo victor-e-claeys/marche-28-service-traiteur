@@ -156,20 +156,22 @@
 .square {
   aspect-ratio: 1;
   border: 3px solid var(--color-weekSelection-unselected);
+  background-color: var(--square-color, transparent);
 }
 
 .square.selection_made {
   border-color: var(--color-weekSelection-selectionMade);
-  background-color: var(--color-weekSelection-selectionMade);
+  --square-color: var(--color-weekSelection-selectionMade);
 }
 
 .square.skip {
-  border-color: var(--color-weekSelection-skip);
-  background-color: var(--color-weekSelection-skip);
+  border-color: var(--color-weekSelection-skip) !important;
+  --square-color: var(--color-weekSelection-skip);
 }
 
 .square.active {
   border-color: var(--color-weekSelection-selected);
+  background-color: color-mix(in srgb, var(--square-color), transparent 50%);
 }
 
 .title-unavailable {
