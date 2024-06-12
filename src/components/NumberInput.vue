@@ -3,6 +3,7 @@
     class="qty-field w-32 h-24"
     controlVariant="split"
     v-model="computedValue" 
+    :disabled="disabled"
     :reverse="false" 
     :label="label" 
     :hideInput="false" 
@@ -18,6 +19,11 @@
 export default {
   name: 'NumberInput',
   props: {
+    disabled: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
     modelValue: {
       type: Number,
       required: true

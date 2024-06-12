@@ -13,6 +13,7 @@ import App from './App.vue'
 // Composables
 import { createApp } from 'vue'
 import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import updateLocale from 'dayjs/plugin/updateLocale';
 import DOMPurify from 'dompurify';
@@ -21,6 +22,7 @@ import utc from 'dayjs/plugin/utc';
 import 'dayjs/locale/fr';
 //import './reset.css';
 import './style.css';
+dayjs.extend(duration);
 dayjs.extend(relativeTime);
 dayjs.extend(updateLocale);
 dayjs.locale('fr');
@@ -48,13 +50,6 @@ app.config.globalProperties = Object.assign(
   {
     dayjs,
     delay: ms => new Promise(res => setTimeout(res, ms)),
-    menuEditable: function(){
-      let editable;
-      return {
-        get: () => editable,
-        set: (value) => editable = value
-      };
-    }(),
     moneyFormatter: new Intl.NumberFormat(
       'fr-CA',
       {

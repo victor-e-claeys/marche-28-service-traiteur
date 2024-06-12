@@ -20,6 +20,7 @@
               v-model="modelValue.variations[variation.id].qty"
               :label="variationName(variation)"
               :min="variation.attributes?.pa_portions == 'enfant' ? 4 : null"
+              :disabled="!currentMenuEditable"
             />
           </div>
         </div>
@@ -47,7 +48,10 @@
       </div>
       <div v-if="!modelValue.variations" class="product-details flex flex-col">
         <div class="product-qty self-start">
-          <NumberInput v-model="modelValue.qty" />
+          <NumberInput 
+            v-model="modelValue.qty" 
+            :disabled="!currentMenuEditable"
+          />
         </div>
         <div
           class="product-price-data whitespace-nowrap min-h-10 flex gap-1 wp-font-text text-sm align-middle items-center self-center"
@@ -112,6 +116,9 @@ import IconFiche from "./icons/IconFiche.vue";
 <script>
 export default {
   name: "Product",
+  inject: [
+    'currentMenuEditable'
+  ],
   props: {
     modelValue: {
       type: Object,

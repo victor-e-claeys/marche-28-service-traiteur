@@ -1,41 +1,43 @@
 <template>
-  <h1 v-if="currentMenu" class="text-center wp-font-primary text-2xl">
-    {{ menuTitre() }}
-  </h1>
-  <div :class="[
-    'grid',
-    'grid-rows-1',
-    'grid-flow-col',
-    'auto-cols-auto',
-    'lg:gap-12',
-    'my-6',
-    'justify-center',
-    'gap-4',
-  ]">
-    <a :class="[
-      'square',
-      'flex',
-      'flex-col',
-      'items-center',
-      'justify-around',
-      'p-4',
-      'cursor-pointer',
-      currentMenuID == menu.id ? 'active' : null,
-      menu.selection_made && currentMenuID != menu.id ? 'selection_made' : null,
-      menu.skip && currentMenuID != menu.id ? 'skip' : null,
-      currentMenuID != menu.id ? 'cursor-pointer' : null,
-      !menu.editable ? 'opacity-25' : null
-    ]" v-for="menu in menus" :key="menu.id" @click="() => setCurrentMenuID(menu.id)">
-      <span class="wp-font-text">{{
-        formattedDateToMonth(menu.date_debut.timestamp, menu.date_fin.timestamp)
-      }}</span>
-      <span class="wp-font-text">{{
-        formattedDateNumberToNumber(
-          menu.date_debut.timestamp,
-          menu.date_fin.timestamp
-        )
-      }}</span>
-    </a>
+  <div>
+    <h1 v-if="currentMenu" class="text-center wp-font-primary text-2xl">
+      {{ menuTitre }}
+    </h1>
+    <div :class="[
+      'grid',
+      'grid-rows-1',
+      'grid-flow-col',
+      'auto-cols-auto',
+      'lg:gap-12',
+      'my-6',
+      'justify-center',
+      'gap-4',
+    ]">
+      <a :class="[
+        'square',
+        'flex',
+        'flex-col',
+        'items-center',
+        'justify-around',
+        'p-4',
+        'cursor-pointer',
+        currentMenu?.id == menu.id ? 'active' : null,
+        menu.selection_made && currentMenu?.id != menu.id ? 'selection_made' : null,
+        menu.skip && currentMenu?.id != menu.id ? 'skip' : null,
+        currentMenu?.id != menu.id ? 'cursor-pointer' : null,
+        !menu.editable ? 'opacity-25' : null
+      ]" v-for="menu in menus" :key="menu.id" @click="() => setCurrentMenuID(menu.id)">
+        <span class="wp-font-text">{{
+          formattedDateToMonth(menu.date_debut.timestamp, menu.date_fin.timestamp)
+        }}</span>
+        <span class="wp-font-text">{{
+          formattedDateNumberToNumber(
+            menu.date_debut.timestamp,
+            menu.date_fin.timestamp
+          )
+        }}</span>
+      </a>
+    </div>
   </div>
 </template>
 
@@ -43,6 +45,10 @@
 export default {
   name: "WeekSelection",
   props: {
+    currentMenu: {
+      type: Object,
+      required: false
+    },
     menus: {
       type: Array,
       required: true,
@@ -51,30 +57,8 @@ export default {
       type: Function,
       required: true,
     },
-    currentMenuID: {
-      type: Number,
-      required: false,
-    },
-    currentMenu: {
-      type: Object,
-      required: false,
-    },
   },
   methods: {
-    /**
-     * Retourne un titre dans le format Menu pour le X au X mois
-     *
-     * @returns {string} Titre du menu
-     */
-    menuTitre() {
-      let date1 = this.dayjs
-        .unix(this.currentMenu.date_debut.timestamp)
-        .format("D MMMM");
-      let date2 = this.dayjs
-        .unix(this.currentMenu.date_fin.timestamp)
-        .format("D MMMM");
-      return `Menu pour le ${date1} au ${date2}`;
-    },
     /**
      * Formatte 2 timestamp en date pour avoir le format "XX - XX"
      * @param timestamp1 Date de début
@@ -105,6 +89,22 @@ export default {
         .unix(timestamp2)
         .format("MMM");
       return month1 === month2 ? month1 : `${month1} - ${month2}`;
+    },
+  },
+  computed: {
+    /**
+     * Retourne un titre dans le format Menu pour le X au X mois
+     *
+     * @returns {string} Titre du menu
+     */
+    menuTitre() {
+      let date1 = this.dayjs
+        .unix(this.currentMenu.date_debut.timestamp)
+        .format("D MMMM");
+      let date2 = this.dayjs
+        .unix(this.currentMenu.date_fin.timestamp)
+        .format("D MMMM");
+      return `Menu pour le ${date1} au ${date2}`;
     },
   },
   created() {

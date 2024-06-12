@@ -3,6 +3,7 @@ import Day from "./components/Day.vue";
 import TimerMenu from "./components/TimerMenu.vue";
 import User from "./components/User.vue";
 import WeekSelection from "./components/WeekSelection.vue";
+import { computed } from "vue";
 </script>
 
 <template>
@@ -11,7 +12,6 @@ import WeekSelection from "./components/WeekSelection.vue";
     <WeekSelection
       v-if="menus"
       :menus="menus"
-      :currentMenuID="currentMenuID"
       :currentMenu="currentMenu"
       :setCurrentMenuID="setCurrentMenuID"
     />
@@ -19,6 +19,7 @@ import WeekSelection from "./components/WeekSelection.vue";
       v-if="currentMenu"
       v-model="currentMenu"
       :currentMenu="currentMenu"
+      :onUpdate="(timeLeft) => this.timeLeft = timeLeft"
     />
     <div
       v-if="currentMenu"
@@ -61,9 +62,7 @@ import WeekSelection from "./components/WeekSelection.vue";
             Confirmer ma sélection
           </v-btn>
           <a
-            @click="
-              !loading && currentMenu.termsAndConditionsAccepted ? skip : null
-            "
+            @click="skip"
             :class="[
               loading || !currentMenu.termsAndConditionsAccepted
                 ? 'opacity-25'
@@ -100,6 +99,7 @@ export default {
   name: "App",
   data() {
     return {
+      timeLeft: null,
       loading: false,
       users: false,
       user: null,
@@ -117,6 +117,7 @@ export default {
     },
     setCurrentMenuID(menuID) {
       this.currentMenuID = menuID;
+      this.timeLeft = 0;
     },
     addSnackBar(snackbar) {
       this.snackbars.push(snackbar);
@@ -197,6 +198,8 @@ export default {
       this.loading = false;
     },
     async skip() {
+      if(this.loading || !this.currentMenu.termsAndConditionsAccepted) return console.log("Skip conditions failed.");
+
       this.loading = "skip";
 
       try {
@@ -316,6 +319,11 @@ export default {
         0
       );
     },
+  },
+  provide(){
+    return {
+      currentMenuEditable: computed(() => this.timeLeft > 0)
+    }
   },
   created() {
     this.updateMenu();
