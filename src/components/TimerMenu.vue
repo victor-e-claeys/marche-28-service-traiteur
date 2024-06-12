@@ -7,14 +7,21 @@
       Plus que quelques heures avant de passer votre commande
     </h4>
     <div v-if="tempsRestant" class="grid">
-      <div :class="['grid', tempsRestant.days() > 0 ? 'grid-cols-7' : 'grid-cols-5', 'gap-2']">
+      <div :class="['grid', 'grid-flow-col', 'gap-2']">
+        <div v-if="tempsRestant.months() > 0" class="flex flex-col items-center">
+          <h4 class="wp-font-primary text-lg">
+            {{ tempsRestant.format("MM") }}
+          </h4>
+          <p class="wp-font-text text-sm">Mois</p>
+        </div>
+        <span v-if="tempsRestant.months() > 0" class="text-center"> : </span>
         <div v-if="tempsRestant.days() > 0" class="flex flex-col items-center">
           <h4 class="wp-font-primary text-lg">
             {{ tempsRestant.format("DD") }}
           </h4>
           <p class="wp-font-text text-sm">Jours</p>
         </div>
-        <span class="text-center"> : </span>
+        <span v-if="tempsRestant.days() > 0" class="text-center"> : </span>
         <div class="flex flex-col items-center">
           <h4 class="wp-font-primary text-lg">
             {{ tempsRestant.format("HH") }}
@@ -67,7 +74,6 @@ export default {
       const timestamp = dayjs().utc().unix();
       this.timeLeft =
         this.currentMenu.date_limite_commande.timestamp - timestamp;
-      console.log(this.timeLeft);
       this.onUpdate && this.onUpdate(this.timeLeft);
     },
     /**
