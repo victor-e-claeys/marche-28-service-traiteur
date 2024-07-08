@@ -50,7 +50,7 @@ import { computed } from "vue";
       <div class="flex max-sm:flex-col max-sm:items-center">
         <div v-if="currentMenu.editable" class="actions flex flex-column items-start">
           <v-btn
-            :class="['bouton-confirmation', 'wp-font-text', 'cursor-pointer']"
+            :class="['bouton-confirmation', 'wp-font-text', 'cursor-pointer', 'tracking-wide', 'indent-2', 'uppercase']"
             @click="confirm"
             color="primary"
             size="large"
