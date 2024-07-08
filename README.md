@@ -1,5 +1,7 @@
 # default
-
+## Envoie du build en prof
+npm run build
+npm run deploy
 ## Project setup
 
 ```
