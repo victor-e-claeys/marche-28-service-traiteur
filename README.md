@@ -1,5 +1,5 @@
 # default
-## Envoie du build en prof
+## Envoie du build en prod
 npm run build
 npm run deploy
 ## Project setup

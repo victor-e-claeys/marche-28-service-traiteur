@@ -3,42 +3,42 @@
     <div v-if="currentMenu" class="text-center wp-font-primary text-2xl">
       {{ menuTitre }}
     </div>
-    <div :class="[
-      'grid',
-      'grid-rows-1',
-      'grid-flow-col',
-      'auto-cols-auto',
-      'lg:gap-12',
-      'my-6',
-      'justify-center',
-      'gap-4',
-      'flex-wrap'
-    ]">
-      <a :class="[
-        'square',
-        'flex',
-        'flex-col',
-        'items-center',
-        'justify-around',
-        'p-4',
-        'cursor-pointer',
-        currentMenu?.id == menu.id ? 'active' : null,
-        menu.selection_made ? 'selection_made' : null,
-        menu.skip ? 'skip' : null,
-        currentMenu?.id != menu.id ? 'cursor-pointer' : null,
-        !menu.editable ? 'opacity-50' : null,
-      ]" v-for="menu in menus" :key="menu.id" @click="() => setCurrentMenuID(menu.id)">
-        <span class="wp-font-text">{{
-          formattedDateToMonth(menu.date_debut.timestamp, menu.date_fin.timestamp)
-        }}</span>
-        <span class="wp-font-text">{{
-          formattedDateNumberToNumber(
-            menu.date_debut.timestamp,
-            menu.date_fin.timestamp
-          )
-        }}</span>
-      </a>
-    </div>
+    <v-slide-group
+    :class="[
+      'mt-4',
+      'mb-4',
+    ]"
+    v-model="currentMenuID"
+    show-arrows
+  >
+      <v-slide-group-item v-for="menu in menus" :key="menu.id">
+        <a :class="[
+              'square',
+              'flex',
+              'flex-col',
+              'items-center',
+              'justify-around',
+              'p-4',
+              'cursor-pointer',
+              currentMenu?.id == menu.id ? 'active' : null,
+              menu.selection_made ? 'selection_made' : null,
+              menu.skip ? 'skip' : null,
+              currentMenu?.id != menu.id ? 'cursor-pointer' : null,
+              !menu.editable ? 'opacity-50' : null,
+            ]" @click="() => setCurrentMenuID(menu.id)">
+          <span class="wp-font-text">{{
+            formattedDateToMonth(menu.date_debut.timestamp, menu.date_fin.timestamp)
+          }}</span>
+          <span class="wp-font-text">{{
+            formattedDateNumberToNumber(
+              menu.date_debut.timestamp,
+              menu.date_fin.timestamp
+            )
+          }}</span>
+        </a>
+      </v-slide-group-item>
+    </v-slide-group>
+
   </div>
 </template>
 

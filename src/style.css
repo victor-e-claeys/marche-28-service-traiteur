@@ -155,8 +155,11 @@
 
 .square {
   aspect-ratio: 1;
-  border: 3px solid var(--color-weekSelection-unselected);
-  background-color: var(--square-color, transparent);
+    width: 110px;
+    height: 110px;
+    border: 3px solid var(--color-weekSelection-unselected);
+    background-color: var(--square-color, transparent);
+    margin-left: 20px;
 }
 
 .square.selection_made {
@@ -274,3 +277,10 @@
   aspect-ratio: 1;
   height: auto;
 }
+
+/**
+  *  Style pour le slider du WeekSelection
+  */
+  .v-slide-group__content{
+    justify-content: center;
+  }
