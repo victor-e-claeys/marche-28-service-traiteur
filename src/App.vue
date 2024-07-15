@@ -61,7 +61,7 @@ import { computed } from "vue";
         <template v-slot:label>
           <div class="wp-font-text">
             J'accepte les
-            <a :href="termsAndConditionsURL" target="_blank" class="underline"
+            <a :href="termsAndConditionsURL" target="_blank" class="underline clickable-link"
               >conditions d'utilisation</a
             >
           </div>
@@ -92,6 +92,7 @@ import { computed } from "vue";
               'underline',
               'mt-3',
               'cursor-pointer',
+              'link-jump-week',
             ]"
           >
             Sauter cette semaine
