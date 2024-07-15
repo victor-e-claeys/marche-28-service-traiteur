@@ -246,3 +246,31 @@
 .qty-field .v-label.v-field-label--floating{
   top: 0;
 }
+
+.v-img__img--preload{
+  background: linear-gradient(to right, #f0f0f0, #d0d0d0, #f0f0f0);
+  background-size: 200% auto;
+  animation: vImgLoadingAnimation 1.5s infinite linear;
+}
+@keyframes vImgLoadingAnimation {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+.product-image{
+  aspect-ratio: 1;
+  flex-grow: 0;
+}
+
+.product-image .v-responsive__sizer{
+  height: 0;
+}
+
+.product-image img{
+  aspect-ratio: 1;
+  height: auto;
+}

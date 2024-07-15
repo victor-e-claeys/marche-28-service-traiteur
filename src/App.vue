@@ -121,6 +121,7 @@ export default {
   data() {
     return {
       loading: false,
+      subscription: null,
       users: false,
       user: null,
       portions: {},
@@ -166,11 +167,12 @@ export default {
         const response = await fetch(
           this.apiURL(`marche28/v1/menu?${params.toString()}`)
         );
-        const { menus, portions, termsAndConditionsURL, user, users } =
+        const { menus, portions, subscription, termsAndConditionsURL, user, users } =
           await response.json();
         this.menus = menus;
         this.portions = portions;
         this.termsAndConditionsURL = termsAndConditionsURL;
+        this.subscription = subscription;
         this.users = users;
         this.user = user?.id > 0 ? this.user || user : null;
       } catch (error) {
@@ -270,12 +272,15 @@ export default {
         notLoggedIn: !this.user
           ? "Vous devez être connecté pour faire une sélection"
           : null,
-        insufficientSelection: !this.selectionHasMinimum
-          ? `Votre sélection doit contenir un minimum de ${this.minimumMealQty} portions enfants/prêt-à-cuisiner par jour sur 4 jours.`
+        notSubscribed: this.user && !this.subscription
+          ? "Vous devez être inscrit pour faire une sélection"
           : null,
         notEditable: this.currentMenu?.editable
           ? null
           : "La date limite de sélection pour ce menu est passée",
+        insufficientSelection: !this.selectionHasMinimum
+          ? `Votre sélection doit contenir un minimum de ${this.minimumMealQty} portions enfants/prêt-à-cuisiner par jour sur 4 jours.`
+          : null,
         notAccepted: !this.currentMenu?.termsAndConditionsAccepted
           ? "Vous devez accepter les termes et conditions"
           : null,

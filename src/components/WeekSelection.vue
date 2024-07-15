@@ -12,6 +12,7 @@
       'my-6',
       'justify-center',
       'gap-4',
+      'flex-wrap'
     ]">
       <a :class="[
         'square',

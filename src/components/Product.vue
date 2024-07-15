@@ -1,7 +1,10 @@
 <template>
   <div class="product flex-grow flex flex-col justify-center bg-white">
-    <img
-      class="aspect-square object-cover"
+    <v-img
+      class="product-image"
+      cover
+      :aspect-ratio="1"
+      :lazy-src="modelValue.image?.sizes.variation_swatches_image_size?.url || modelValue.image?.url"
       :src="modelValue.image?.sizes.medium?.url || modelValue.image?.url"
       :alt="modelValue.name"
     />
