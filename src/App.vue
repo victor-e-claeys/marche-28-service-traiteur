@@ -73,7 +73,7 @@ import { computed } from "vue";
           class="actions flex flex-column items-start"
         >
           <v-btn
-            :class="['bouton-confirmation', 'wp-font-text', 'cursor-pointer']"
+            :class="['bouton-confirmation', 'wp-font-text', 'cursor-pointer','tracking-normal','normal-case']"
             @click="confirm"
             color="primary"
             size="large"
