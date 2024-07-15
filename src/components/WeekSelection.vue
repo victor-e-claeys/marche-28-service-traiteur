@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h1 v-if="currentMenu" class="text-center wp-font-primary text-2xl">
+    <div v-if="currentMenu" class="text-center wp-font-primary text-2xl">
       {{ menuTitre }}
-    </h1>
+    </div>
     <div :class="[
       'grid',
       'grid-rows-1',

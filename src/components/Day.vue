@@ -3,7 +3,7 @@ import Product from "./Product.vue";
 </script>
 
 <template>
-  <h3
+  <div
     :class="[
       'day-name',
       'text-center',
@@ -27,7 +27,7 @@ import Product from "./Product.vue";
     ]"
   >
     {{ modelValue.date.day }}
-  </h3>
+  </div>
   <div
     v-if="!modelValue.available"
     :class="[
@@ -57,8 +57,7 @@ import Product from "./Product.vue";
       '@container',
       'flex',
       'flex-col',
-      'lg:row-start-2',
-      'wp-font-primary'
+      'lg:row-start-2'
     ]"
   >
     <div

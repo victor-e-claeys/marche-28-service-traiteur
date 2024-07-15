@@ -1,5 +1,6 @@
 <script setup>
 import Day from "./components/Day.vue";
+import Product from "./components/Product.vue";
 import TimerMenu from "./components/TimerMenu.vue";
 import User from "./components/User.vue";
 import WeekSelection from "./components/WeekSelection.vue";
@@ -15,12 +16,9 @@ import { computed } from "vue";
       :currentMenu="currentMenu"
       :setCurrentMenuID="setCurrentMenuID"
     />
-    <TimerMenu
-      v-if="currentMenu"
-      v-model="currentMenu"
-    />
+    <TimerMenu v-if="currentMenu" v-model="currentMenu" />
     <div
-      v-if="currentMenu"
+      v-if="currentMenu?.days"
       :class="[
         'days',
         'grid',
@@ -31,13 +29,35 @@ import { computed } from "vue";
       ]"
     >
       <Day
-        v-for="(day, index) in currentMenu.days"
-        :key="index"
-        v-model="currentMenu.days[index]"
+        v-for="(_, key) in currentMenu.days"
+        :key="key"
+        v-model="currentMenu.days[key]"
       />
     </div>
+    <div v-if="currentMenu?.options" class="mt-9">
+      <div class="wp-font-primary text-lg uppercase mb-6">Options</div>
+      <div
+        v-if="currentMenu"
+        :class="[
+          'grid',
+          'grid-cols-1',
+          'xs:grid-cols-2',
+          'lg:grid-cols-5',
+          'gap-4',
+        ]"
+      >
+        <Product
+          v-for="(_, key) in currentMenu.options"
+          :key="key"
+          v-model="currentMenu.options[key]"
+        />
+      </div>
+    </div>
     <div v-if="currentMenu">
-      <v-checkbox v-if="currentMenu.editable" v-model="currentMenu.termsAndConditionsAccepted">
+      <v-checkbox
+        v-if="currentMenu.editable"
+        v-model="currentMenu.termsAndConditionsAccepted"
+      >
         <template v-slot:label>
           <div class="wp-font-text">
             J'accepte les
@@ -48,7 +68,10 @@ import { computed } from "vue";
         </template>
       </v-checkbox>
       <div class="flex max-sm:flex-col max-sm:items-center">
-        <div v-if="currentMenu.editable" class="actions flex flex-column items-start">
+        <div
+          v-if="currentMenu.editable"
+          class="actions flex flex-column items-start"
+        >
           <v-btn
             :class="['bouton-confirmation', 'wp-font-text', 'cursor-pointer']"
             @click="confirm"
@@ -80,13 +103,7 @@ import { computed } from "vue";
             :key="key"
             icon="mdi-alert-circle-outline"
             :text="message"
-            :class="[
-              key,
-              'error-style',
-              'text-red-700',
-              'py-0',
-              'border-none'
-            ]"
+            :class="[key, 'error-style', 'text-red-700', 'py-0', 'border-none']"
             :stacked="false"
           />
         </div>
@@ -142,7 +159,7 @@ export default {
     async updateMenu() {
       const params = new URLSearchParams({
         user: this.user?.id || "",
-        upcoming: true
+        upcoming: true,
       });
 
       try {
@@ -191,6 +208,7 @@ export default {
           );
 
         if (errors.length === 0) {
+          this.currentMenu.selection_made = true;
           this.currentMenu.skip = false;
           this.currentMenu.isModified = false;
         }
@@ -242,10 +260,7 @@ export default {
   },
   computed: {
     canSubmit() {
-      return (
-        !this.loading &&
-        this.errorMessages.length === 0
-      );
+      return !this.loading && this.errorMessages.length === 0;
     },
     currentMenu() {
       return this.menus?.find((menu) => menu.id === this.currentMenuID);
@@ -258,7 +273,7 @@ export default {
         insufficientSelection: !this.selectionHasMinimum
           ? `Votre sélection doit contenir un minimum de ${this.minimumMealQty} portions enfants/prêt-à-cuisiner par jour sur 4 jours.`
           : null,
-        notEditable: this.currentMenu?.editable 
+        notEditable: this.currentMenu?.editable
           ? null
           : "La date limite de sélection pour ce menu est passée",
         notAccepted: !this.currentMenu?.termsAndConditionsAccepted
@@ -283,6 +298,39 @@ export default {
       );
     },
     selection() {
+      const options =
+        this.currentMenu?.options &&
+        Object.values(this.currentMenu.options).length > 0
+          ? Object.values(this.currentMenu.options).reduce(
+              (selection, { id, qty, price, variations }) => {
+                const productID = id;
+                if (variations) {
+                  Object.values(variations).reduce(
+                    (selection, { attributes, id, qty, price }) => {
+                      const variationID = id;
+                      selection.push({
+                        productID,
+                        qty,
+                        price,
+                        variationID,
+                        attributes,
+                      });
+                      return selection;
+                    },
+                    selection
+                  );
+                } else {
+                  selection.push({
+                    productID,
+                    qty,
+                    price,
+                  });
+                }
+                return selection;
+              },
+              []
+            )
+          : [];
       return this.currentMenu?.days.reduce(
         (selection, { dayNumber, available, products, selectionType }) => {
           if (!available) return selection;
@@ -322,7 +370,7 @@ export default {
           }, selection);
           return selection;
         },
-        []
+        options
       );
     },
     total() {
@@ -334,8 +382,8 @@ export default {
   },
   provide() {
     return {
-      currentMenu: computed(() => this.currentMenu)
-    }
+      currentMenu: computed(() => this.currentMenu),
+    };
   },
   created() {
     this.updateMenu();

@@ -1,14 +1,14 @@
 <template>
-  <div class="product flex-grow flex flex-col justify-center">
+  <div class="product flex-grow flex flex-col justify-center bg-white">
     <img
       class="aspect-square object-cover"
-      :src="modelValue.image?.sizes.medium.url"
+      :src="modelValue.image?.sizes.medium?.url || modelValue.image?.url"
       :alt="modelValue.name"
     />
     <div class="product-details flex-grow p-3 flex flex-col">
-      <h3 class="text-left flex-grow wp-font-text text-lg self-start mb-4">
+      <div class="text-left flex-grow wp-font-text self-start mb-4">
         {{ modelValue.name }}
-      </h3>
+      </div>
       <div class="variations flex flex-col" v-if="modelValue.variations">
         <div class="variation-details flex justify-between">
           <div
@@ -25,7 +25,7 @@
           </div>
         </div>
         <div
-          class="variations-price-data whitespace-nowrap flex gap-1 wp-font-text text-sm align-center self-center"
+          class="variations-price-data whitespace-nowrap flex gap-1 wp-font-text align-center self-center"
           v-for="(variation, index) in adjustedVariations"
           :key="index"
         >
@@ -54,7 +54,7 @@
           />
         </div>
         <div
-          class="product-price-data whitespace-nowrap min-h-10 flex gap-1 wp-font-text text-sm align-middle items-center self-center"
+          class="product-price-data whitespace-nowrap min-h-10 flex gap-1 wp-font-text align-middle items-center self-center"
         >
           <span class="product-price">
             {{ moneyFormatter.format(modelValue.price) }}

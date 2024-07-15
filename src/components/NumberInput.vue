@@ -1,6 +1,6 @@
 <template>
   <v-number-input 
-    class="qty-field w-32 h-24"
+    class="qty-field w-32 h-24 text-sm"
     controlVariant="split"
     v-model="computedValue" 
     :disabled="disabled"
@@ -11,7 +11,6 @@
     :min="0"
     variant="plain"
     rounded="0"
-    size="small"
   />
 </template>
 
